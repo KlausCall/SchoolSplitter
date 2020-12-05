@@ -81,14 +81,15 @@ const Input: React.FC<Props> = () => {
             </div>
             <div className="form-group col-md-4">
               <label htmlFor="toleranceInput" className="form-label">
-                Toleranz Gruppen Größe:
+                Toleranz Gruppen Größe: <b>{groupTolerance}</b>
               </label>
               <input
-                type="number"
+                type="range"
                 id="toleranceInput"
                 className="form-control"
-                min="1"
+                min="0"
                 max="10"
+                step="1"
                 onChange={(e) => setGroupTolerance(e.target.valueAsNumber)}
                 value={groupTolerance}
               />
