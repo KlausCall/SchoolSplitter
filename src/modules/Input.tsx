@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import CSVReader from 'react-csv-reader';
 import { GradeLevel } from '../domain/GradeLevel';
 import { LevelSlicer } from '../domain/LevelSlicer';
+import ResultProvider from '../domain/ResultProvider';
+import Result from './Result';
 import ResultTable from './ResultTable';
 
 interface Props { }
@@ -18,7 +20,16 @@ const Input: React.FC<Props> = () => {
   const [speed, setSpeed] = useState('slow');
   const [relMoves, setRelMoves] = useState(30);
   const [iterations, setIterations] = useState(200);
-  const [result, setResult] = useState<any[]>();
+  const [result, setResult] = useState<ResultProvider[]>([]);
+
+  function updateResult(provider: ResultProvider) {
+    if (provider) {
+      setResult([provider]);
+    } else {
+      setResult([]);
+    }
+  }
+
 
   return (
     <main className="container-fluid">
@@ -36,7 +47,7 @@ const Input: React.FC<Props> = () => {
             setGradeLevel(level);
             setLevelSlicer(undefined);
             setSlicerState("");
-            setResult(level.pupilTable());
+            updateResult(level);
           }} 
         />
         <p>{gradeLevel ? gradeLevel.displayString() : 'Bitte Daten laden.'}</p>
@@ -171,7 +182,7 @@ const Input: React.FC<Props> = () => {
                     );
                     setLevelSlicer(slicer);
                     setSlicerState(slicer.statusString());
-                    setResult(slicer.pupilTable());
+                    updateResult(slicer);
                   }
                 }}
               >
@@ -186,7 +197,7 @@ const Input: React.FC<Props> = () => {
                   if (levelSlicer) {
                     levelSlicer.optimize();
                     setSlicerState(levelSlicer.statusString());
-                    setResult(levelSlicer.pupilTable());
+                    updateResult(levelSlicer);
                   }
                 }}
               >
@@ -201,7 +212,7 @@ const Input: React.FC<Props> = () => {
                   if (levelSlicer) {
                     levelSlicer.doMove();
                     setSlicerState(levelSlicer.statusString());
-                    setResult(levelSlicer.pupilTable());
+                    updateResult(levelSlicer);
                   }
                 }}
               >
@@ -234,7 +245,7 @@ const Input: React.FC<Props> = () => {
                   );
                   setLevelSlicer(slicer);
                   setSlicerState(slicer.statusString());
-                  setResult(slicer.pupilTable());
+                  updateResult(slicer);
                 }
               }}
             >
@@ -257,7 +268,7 @@ const Input: React.FC<Props> = () => {
         <p>{slicerState ? slicerState : "no Solution calculated"}</p>
       </div>
       <h3>Ausgabe</h3>
-      <ResultTable list={result} />
+      <Result holder={result} />
 
       <details>
         <summary>

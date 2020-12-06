@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ResultTable: React.FC<{list?: any[]}> = ({list}) => {
+const ResultTable: React.FC<{list?: any[], title: String}> = ({list, title}) => {
   const [selectedRow, setSelectedRow] = useState(-1);
 
   if (!list || list.length === 0) {return null};
@@ -15,7 +15,8 @@ const ResultTable: React.FC<{list?: any[]}> = ({list}) => {
   return (
     <div>
       <div>
-        <a className="btn btn-primary" href={dataURL} download="result.csv">CSV herunterladen</a>
+        <h5 style={{ display: "inline" }}>{title}</h5>
+        <a className="btn btn-primary float-right" href={dataURL} download="result.csv">CSV herunterladen</a>
       </div>
       <table className="table table-bordered table-sm">
         <thead className="thead-light">
