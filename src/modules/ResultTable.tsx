@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const ResultTable: React.FC<{list?: any[]}> = ({list}) => {
+  const [selectedRow, setSelectedRow] = useState(-1);
+
   if (!list || list.length === 0) {return null};
   var keys = Object.keys(list[0])
   var csv = "";
@@ -15,16 +17,18 @@ const ResultTable: React.FC<{list?: any[]}> = ({list}) => {
       <div>
         <a className="btn btn-primary" href={dataURL} download="result.csv">CSV herunterladen</a>
       </div>
-      <table className="table table-striped table-bordered table-sm">
-        <thead className="thead-dark">
+      <table className="table table-bordered table-sm">
+        <thead className="thead-light">
           <tr>
-            {keys.map(k => <td>{k}</td>)}
+            {keys.map(k => <th>{k}</th>)}
           </tr>
         </thead>
         <tbody>
-          {list.map(obj => {
+          {list.map((obj, i) => {
             return (
-            <tr>
+            <tr className={selectedRow === i ? 'table-info' : ''}
+                onClick={ (ev) => setSelectedRow(i)}
+            >
               {keys.map(k => <td>{obj[k]}</td>)}
             </tr>
             )

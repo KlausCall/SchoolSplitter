@@ -2,8 +2,9 @@ import { Course } from './Course';
 import { CourseBlock } from './CourseBlock';
 import { CourseCombination } from './CourseCombination';
 import { Pupil } from './Pupil';
+import ResultProvider from './ResultProvider';
 
-export class GradeLevel {
+export class GradeLevel implements ResultProvider{
   private pupilList: Pupil[];
   private courseList: Course[];
   private combinationList: CourseCombination[];

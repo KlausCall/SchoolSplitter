@@ -1,8 +1,9 @@
 import { GradeLevel } from './GradeLevel';
 import { CombiDistribution } from './CombiDistribution';
 import { Move } from './Move';
+import ResultProvider from './ResultProvider';
 
-export class LevelSlicer {
+export class LevelSlicer implements ResultProvider{
   readonly size: number;
   readonly level: GradeLevel;
   readonly distributions: CombiDistribution[];
@@ -251,7 +252,7 @@ export class LevelSlicer {
     console.log('PUPILS');
     console.table(this.pupilTable());
     console.log('DISTRIBUTIONS');
-    console.table(this.distroTable());
+    console.table(this.combiTable());
     console.log('COURSES');
     console.table(this.courseTable());
     console.log('CONTACTS : ' + this.getContacts());
@@ -269,7 +270,7 @@ export class LevelSlicer {
     return res;
   }
 
-  public distroTable() {
+  public combiTable() {
     var res: Object[] = [];
     this.distributions.forEach((dist) => res.push(dist.asLO()));
     var sum: any = { no: 'Summe' };
