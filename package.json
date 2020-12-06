@@ -26,7 +26,7 @@
     "eject": "react-scripts eject",
     "format:test": "prettier src",
     "format:write": "prettier src/ --write",
-    "preversion": "[ \"$(git branch --show-current)\" != \"main\" ] && echo Not on master branch && exit 1 || echo Preversion checks passed",
+    "preversion": "[ \"$(git branch --show-current)\" != \"master\" ] && echo Not on master branch && exit 1 || echo Preversion checks passed",
     "version": "sed -i '/Unreleased/a Changes in the upcoming version are documented here.\\n\\n---\\n\\n## v'$npm_package_version'' changelog.md && git add changelog.md",
     "postversion": "git push && git push --tags"
   },
