@@ -266,47 +266,10 @@ const Input: React.FC<Props> = () => {
         </div>
         <p>{slicerState ? slicerState : "no Solution calculated"}</p>
       </div>
+
       <h3>Ausgabe</h3>
       <Result holder={result} />
 
-      <details>
-        <summary>
-          <h5 style={{ display: "inline" }}>Konsolen Ausgabe</h5>
-        </summary>
-        <div className="mb-3">
-          <button
-            className="btn btn btn-outline-secondary"
-            id="printTables"
-            disabled = {!gradeLevel}
-            onClick={() => {
-              if (gradeLevel) {
-                gradeLevel.print();
-              }
-            }}
-          >
-            Eingangsdaten ausgeben
-          </button>
-          <button
-            className="btn btn btn-outline-secondary"
-            disabled = {!levelSlicer}
-            onClick={() => {
-              if (levelSlicer) {
-                levelSlicer.print();
-              }
-            }}
-          >
-            Aktuelle Teilung ausgeben
-          </button>
-          <button
-            className="btn btn btn-outline-secondary"
-            onClick={() => {
-              console.clear();
-            }}
-          >
-            Konsole zurücksetzen
-          </button>
-        </div>
-      </details>
     </main>
   );
 };
