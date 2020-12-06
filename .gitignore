@@ -8,6 +8,9 @@
 /.vscode
 /data
 
+# build
+/build
+
 # misc
 .DS_Store
 .eslintcache
