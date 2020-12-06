@@ -4,7 +4,6 @@ import { GradeLevel } from '../domain/GradeLevel';
 import { LevelSlicer } from '../domain/LevelSlicer';
 import ResultProvider from '../domain/ResultProvider';
 import Result from './Result';
-import ResultTable from './ResultTable';
 
 interface Props { }
 
