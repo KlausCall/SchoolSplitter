@@ -15,7 +15,7 @@ const ResultTable: React.FC<{list?: any[]}> = ({list}) => {
       <div>
         <a className="btn btn-primary" href={dataURL} download="result.csv">CSV herunterladen</a>
       </div>
-      <table className="table table-responsive table-striped table-bordered table-sm">
+      <table className="table table-striped table-bordered table-sm">
         <thead className="thead-dark">
           <tr>
             {keys.map(k => <td>{k}</td>)}
