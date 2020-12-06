@@ -108,6 +108,7 @@ export class GradeLevel {
       seenPupil = courses[0].getMembers();
       for (let i = 1; i < courses.length; i++) {
         const next = courses[i];
+        // eslint-disable-next-line
         if (!next.getMembers().some((p) => seenPupil.includes(p))) {
           blockCourses.push(next);
           indices.push(i);
