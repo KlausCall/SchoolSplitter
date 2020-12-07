@@ -1,10 +1,10 @@
 # Changelog
 
 ## Unreleased
-Changes in the upcoming version are documented here.
-
+ - First official release !
+ 
 ---
-
+ - documentation update
 ## v0.9.0
 
 - prepare first official release !

@@ -45,10 +45,17 @@ const HelpDialog: React.FC<Props> = () => (
               Berechnung wird der Lösungsalgorithmus mehrmals durchlaufen und die beste gefundene Lösung ausgegeben. Die Anzahl
               der <i>Durchläufe</i> kann vorgegeben werden.
             </p>
+            <h4>Ausgabe</h4>
             <p>
-              Die Ausgabe der eingelesenen und berechneten Daten erfolgt im unteren Bereich tabellarisch und kann als CSV-Datei 
-              gesichert werden. Die Tabelle enthält folgende Spalten:
+              Die Ausgabe der eingelesenen und berechneten Daten erfolgt im unteren Bereich tabellarisch. Die Tabellen können als 
+              CSV-Dateien gesichert werden. Es werden drei Tabellen angezeigt, die Schüler, die Kurse und die Kursbelegungen. 
+              Nach Erzeugung einer Lösung werden in diesen Tabellen auch Informationen zu den Gruppen dargestellt.
             </p>
+            <p>
+              Zur genaueren Inspektion der Daten kann in jeder Tabelle eine Zeile durch Mausklick selektiert werden. In den 
+              anderen beiden Tabellen werden dann die korrespondierenden Zeilen hervorgehoben.
+            </p>
+            <h5>Die Schüler Tabelle enthält folgende Spalten:</h5>
             <dl>
               <dt>no</dt>
               <dd>Nummer des Schülers</dd>
