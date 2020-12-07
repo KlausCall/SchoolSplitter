@@ -1,6 +1,11 @@
 # Changelog
 
 ## Unreleased
+Changes in the upcoming version are documented here.
+
+---
+
+## v0.9.0
 
 - prepare first official release !
 - made table selections connected

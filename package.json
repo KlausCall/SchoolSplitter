@@ -1,6 +1,6 @@
 {
   "name": "school-split",
-  "version": "0.2.1",
+  "version": "0.9.0",
   "homepage": ".",
   "private": true,
   "dependencies": {
