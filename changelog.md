@@ -1,7 +1,13 @@
 # Changelog
 
 ## Unreleased
-Changes in the upcoming version are documented here.
+
+- prepare first official release !
+- made table selections connected
+- removed console output buttons
+- show all results in three tables
+- made tabel selectable
+
 
 ---
 
