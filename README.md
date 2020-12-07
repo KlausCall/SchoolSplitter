@@ -7,13 +7,13 @@ For this reason this docummentation is also in german - sorry.
 
 ## Einführung
 
-Diesee Programm dient der Aufteilung einer Klassenstufe in zwei oder mehr
+Dieses Programm dient der Aufteilung einer Klassenstufe in zwei oder mehr
 Gruppen, die im Wechsel unterrichtet werden. Es versucht Aufteilungen zu 
 finden, bei denen möglchst wenig paarweise Kontakte zwischen Schülern 
 entstehen. Als Nebenbedinguung kann die resultierende Größe der Kurse  definiert werden. 
 
 Die Aufteilung einer Klassenstufe ist trivial, so lange der Unterricht
-durchgehende im Klassenverbund statt findet. Werden jedoch einzelne Fächer
+durchgehende im Klassenverbund stattfindet. Werden jedoch einzelne Fächer
 (wie.z.B. Religion, die 2. Fremdsprache) in Kursen mit unterschiedlicher 
 Belegung unterrichtet, so steigt die Komplexität deutlich.
 
