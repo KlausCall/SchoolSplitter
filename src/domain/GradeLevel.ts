@@ -163,6 +163,9 @@ export class GradeLevel implements ResultProvider{
   /*
    *  output support
    */
+  public getLevel() {
+    return this;
+  }
 
   public displayString() {
     return `Pupils: ${this.pupilList.length}; Courses: ${

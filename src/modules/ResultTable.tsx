@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const ResultTable: React.FC<{list?: any[], title: String}> = ({list, title}) => {
-  const [selectedRow, setSelectedRow] = useState(-1);
+const ResultTable: React.FC<{list?: any[], title: String, selections: number[], setSelection: any}> = ({list, title, selections, setSelection}) => {
+  const selectedRows = selections;
+  const updateSelectedRow = setSelection;
 
   if (!list || list.length === 0) {return null};
   var keys = Object.keys(list[0])
@@ -27,8 +28,8 @@ const ResultTable: React.FC<{list?: any[], title: String}> = ({list, title}) => 
         <tbody>
           {list.map((obj, i) => {
             return (
-            <tr className={selectedRow === i ? 'table-info' : ''}
-                onClick={ (ev) => setSelectedRow(i)}
+            <tr className={selectedRows?.includes(i) ? 'table-info' : ''}
+                onClick={ (ev) => updateSelectedRow(i)}
             >
               {keys.map(k => <td>{obj[k]}</td>)}
             </tr>

@@ -59,6 +59,10 @@ export class CourseCombination {
     return this.members[i];
   }
 
+  public getMembers() {
+    return this.members;
+  }
+
   public getMemberCount(): number {
     return this.members.length;
   }

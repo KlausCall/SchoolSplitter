@@ -243,6 +243,10 @@ export class LevelSlicer implements ResultProvider{
     
   }
 
+  public getLevel() {
+    return this.level;
+  }
+
   public statusString() {
     return `Groups: ${this.size}; Contacts: ${this.getContacts()}; Moves: ${this.moveList.length
       }; Finished: ${this.finished}; Fixing sizes: ${this.reduceGroups}; Oversize: ${this.getOversize()}`;

@@ -167,7 +167,8 @@ const Input: React.FC<Props> = () => {
               <button
                 className="form-control btn btn-outline-secondary"
                 disabled = {!gradeLevel}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   if (gradeLevel) {
                     var slicer = new LevelSlicer(
                       sliceCount,
@@ -192,7 +193,8 @@ const Input: React.FC<Props> = () => {
               <button
                 className="form-control btn btn-outline-secondary"
                 disabled = {!levelSlicer}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   if (levelSlicer) {
                     levelSlicer.optimize();
                     setSlicerState(levelSlicer.statusString());
@@ -207,7 +209,8 @@ const Input: React.FC<Props> = () => {
               <button
                 className="form-control btn btn-outline-secondary"
                 disabled = {!levelSlicer}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   if (levelSlicer) {
                     levelSlicer.doMove();
                     setSlicerState(levelSlicer.statusString());
@@ -229,7 +232,8 @@ const Input: React.FC<Props> = () => {
           <button
               className="form-control col-sm-2 btn btn-primary"
               disabled = {!gradeLevel}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 if (gradeLevel) {
                   var slicer = LevelSlicer.solve(
                     sliceCount,
