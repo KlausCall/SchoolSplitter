@@ -221,6 +221,22 @@ const Input: React.FC<Props> = () => {
                 Einzelschritt ausführen
               </button>
             </div>
+            <div className="form-group col-md-2">
+              <button
+                className="form-control btn btn-outline-secondary"
+                disabled = {!levelSlicer}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (levelSlicer) {
+                    levelSlicer.undoLastMove();
+                    setSlicerState(levelSlicer.statusString());
+                    updateResult(levelSlicer);
+                  }
+                }}
+              >
+                letzten Schritt zurück
+              </button>
+            </div>
           </div>
           <p>
             {levelSlicer ? levelSlicer.configString() : 'Bitte Teilung erzeugen'}
