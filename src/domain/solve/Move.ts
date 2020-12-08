@@ -15,7 +15,7 @@ export class Move {
 
   // revert this move
   public revert(slicer: LevelSlicer) {
-    // TODO
+    slicer.revertMove(this);
   }
 
 }

@@ -1,3 +1,4 @@
+import { LevelSlicer } from "./LevelSlicer";
 import { Move } from "./Move";
 
 export class ModeSwitchMove extends Move {
@@ -7,8 +8,8 @@ export class ModeSwitchMove extends Move {
   }
 
   // revert this move
-  public revert() {
-    // TODO
+  public revert(slicer: LevelSlicer) {
+    slicer.revertModeSwitch();
   }
 
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CSVReader from 'react-csv-reader';
 import { GradeLevel } from '../domain/GradeLevel';
-import { LevelSlicer } from '../domain/LevelSlicer';
+import { LevelSlicer } from '../domain/solve/LevelSlicer';
 import ResultProvider from '../domain/ResultProvider';
 import Result from './Result';
 

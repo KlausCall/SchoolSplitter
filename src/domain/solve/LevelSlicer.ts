@@ -204,6 +204,26 @@ export class LevelSlicer implements ResultProvider{
     }
   }
 
+  public undoLastMove() {
+    if (this.moveList.length > 0) {
+      const move = this.moveList.pop();
+      move!.revert(this);
+    }
+  }
+
+  public revertMove(move: Move) {
+    var revMove = new Move(move.combination, move.to, move.from, - move.progress);
+    this.distributions[revMove.combination].doMove(revMove);
+  }
+
+  public revertFinish() {
+    this.finished = false;
+  }
+
+  public revertModeSwitch() {
+    this.reduceGroups = true;
+  }
+
   public getSize() {
     return this.size;
   }

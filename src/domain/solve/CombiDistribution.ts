@@ -1,4 +1,4 @@
-import { CourseCombination } from './CourseCombination';
+import { CourseCombination } from '../CourseCombination';
 import { LevelSlicer } from './LevelSlicer';
 import { Move } from './Move';
 
