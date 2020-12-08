@@ -1,3 +1,5 @@
+import { LevelSlicer } from "./LevelSlicer";
+
 export class Move {
   public readonly combination: number;
   public readonly from: number;
@@ -10,4 +12,10 @@ export class Move {
     this.to = to;
     this.progress = progress;
   }
+
+  // revert this move
+  public revert(slicer: LevelSlicer) {
+    // TODO
+  }
+
 }

@@ -1,7 +1,9 @@
-import { GradeLevel } from './GradeLevel';
+import { GradeLevel } from '../GradeLevel';
 import { CombiDistribution } from './CombiDistribution';
 import { Move } from './Move';
-import ResultProvider from './ResultProvider';
+import ResultProvider from '../ResultProvider';
+import { ModeSwitchMove } from './ModeSwitchMove';
+import { FinishMove } from './FinishMove';
 
 export class LevelSlicer implements ResultProvider{
   readonly size: number;
@@ -35,7 +37,6 @@ export class LevelSlicer implements ResultProvider{
     best = new LevelSlicer(aSize, aLevel,initializer,move, speed, moveTolerance, groupRestrict,groupTolerance);
     best.optimize();
     contacts = best.getContacts();
-    console.log(best.statusString());
     do {
       var current : LevelSlicer;
       var currentContacts : number;
@@ -44,7 +45,6 @@ export class LevelSlicer implements ResultProvider{
       current = new LevelSlicer(aSize, aLevel,initializer,move, speed, moveTolerance, groupRestrict,groupTolerance);
       current.optimize();
       currentContacts = current.getContacts();
-      console.log(current.statusString());
       if (currentContacts < contacts) {
         best = current;
         contacts = currentContacts;
@@ -175,8 +175,10 @@ export class LevelSlicer implements ResultProvider{
     if (candidateMoves.length === 0) {
         if (this.reduceGroups) {
             this.reduceGroups = false;
+            this.moveList.push(new ModeSwitchMove());
         } else {
             this.finished = true;
+            this.moveList.push(new FinishMove());
         }
     } else {
       // sort candidates
