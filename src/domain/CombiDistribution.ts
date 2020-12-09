@@ -81,7 +81,11 @@ export class CombiDistribution {
    * @param minProgress minimal progess in contacts
    * @param maxSize maximal membe count of groups
    */
-  public findMoves(minProgress: number, onlyOversizedCourses: boolean, resultList: Move[]) {
+  public findMoves(
+    minProgress: number,
+    onlyOversizedCourses: boolean,
+    resultList: Move[]
+  ) {
     var courseSizes: number[][];
     var maxSizes: number[];
     var sources: number[];
@@ -103,7 +107,7 @@ export class CombiDistribution {
       });
     }
     if (sources.length === 0) {
-      return ;
+      return;
     }
 
     // find allowed targets with size of all courses less than maxSize
@@ -123,7 +127,7 @@ export class CombiDistribution {
         targets.length === 1 &&
         sources[0] === targets[0])
     ) {
-      return ;
+      return;
     }
 
     // calculate expected changes of contacts
@@ -218,8 +222,8 @@ export class CombiDistribution {
       var max = pos + count;
       while (pos < max) {
         pupilsTable[this.combi.getMember(pos).getIndex()].group = i;
-        pos ++;
+        pos++;
       }
-    }) 
+    });
   }
 }

@@ -1,6 +1,6 @@
-body { 
-  padding-top: 4.5rem; 
-  padding-bottom: 4.5rem; 
+body {
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
 }
 
 .modal-backdrop {
@@ -8,7 +8,7 @@ body {
 }
 
 .modal {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {

@@ -5,12 +5,12 @@ import { LevelSlicer } from '../domain/LevelSlicer';
 import ResultProvider from '../domain/ResultProvider';
 import Result from './Result';
 
-interface Props { }
+interface Props {}
 
 const Input: React.FC<Props> = () => {
   const [gradeLevel, setGradeLevel] = useState<GradeLevel>();
   const [levelSlicer, setLevelSlicer] = useState<LevelSlicer>();
-  const [slicerState, setSlicerState] = useState("");
+  const [slicerState, setSlicerState] = useState('');
   const [sliceCount, setSliceCount] = useState(2);
   const [initializer, setInitializer] = useState('first');
   const [groupRestrict, setGroupRestrict] = useState('each');
@@ -29,7 +29,6 @@ const Input: React.FC<Props> = () => {
     }
   }
 
-
   return (
     <main className="container-fluid">
       <h3>Eingabe</h3>
@@ -37,25 +36,25 @@ const Input: React.FC<Props> = () => {
         <label htmlFor="csvUpload" className="form-label">
           CSV Datei mit Daten auswählen:
         </label>
-        <CSVReader 
-          inputId="csvUpload" 
-          cssInputClass="form-control" 
-          parserOptions={{}} 
-          onFileLoaded={data => {
+        <CSVReader
+          inputId="csvUpload"
+          cssInputClass="form-control"
+          parserOptions={{}}
+          onFileLoaded={(data) => {
             const level = new GradeLevel(data);
             setGradeLevel(level);
             setLevelSlicer(undefined);
-            setSlicerState("");
+            setSlicerState('');
             updateResult(level);
-          }} 
+          }}
         />
         <p>{gradeLevel ? gradeLevel.displayString() : 'Bitte Daten laden.'}</p>
       </div>
 
-      <h3 >Berechnen</h3>
+      <h3>Berechnen</h3>
       <details>
         <summary>
-          <h5 style={{ display: "inline" }}>Konfiguration</h5>
+          <h5 style={{ display: 'inline' }}>Konfiguration</h5>
         </summary>
         <form>
           <div className="form-row">
@@ -166,7 +165,7 @@ const Input: React.FC<Props> = () => {
             <div className="form-group col-md-2">
               <button
                 className="form-control btn btn-outline-secondary"
-                disabled = {!gradeLevel}
+                disabled={!gradeLevel}
                 onClick={(e) => {
                   e.preventDefault();
                   if (gradeLevel) {
@@ -192,7 +191,7 @@ const Input: React.FC<Props> = () => {
             <div className="form-group col-md-2">
               <button
                 className="form-control btn btn-outline-secondary"
-                disabled = {!levelSlicer}
+                disabled={!levelSlicer}
                 onClick={(e) => {
                   e.preventDefault();
                   if (levelSlicer) {
@@ -208,7 +207,7 @@ const Input: React.FC<Props> = () => {
             <div className="form-group col-md-2">
               <button
                 className="form-control btn btn-outline-secondary"
-                disabled = {!levelSlicer}
+                disabled={!levelSlicer}
                 onClick={(e) => {
                   e.preventDefault();
                   if (levelSlicer) {
@@ -223,36 +222,38 @@ const Input: React.FC<Props> = () => {
             </div>
           </div>
           <p>
-            {levelSlicer ? levelSlicer.configString() : 'Bitte Teilung erzeugen'}
+            {levelSlicer
+              ? levelSlicer.configString()
+              : 'Bitte Teilung erzeugen'}
           </p>
         </form>
       </details>
       <div>
         <div className="form-group row container-fluid">
           <button
-              className="form-control col-sm-2 btn btn-primary"
-              disabled = {!gradeLevel}
-              onClick={(e) => {
-                e.preventDefault();
-                if (gradeLevel) {
-                  var slicer = LevelSlicer.solve(
-                    sliceCount,
-                    gradeLevel,
-                    initializer,
-                    move,
-                    speed,
-                    relMoves,
-                    groupRestrict,
-                    groupTolerance,
-                    iterations
-                  );
-                  setLevelSlicer(slicer);
-                  setSlicerState(slicer.statusString());
-                  updateResult(slicer);
-                }
-              }}
-            >
-              Lösung berechnen
+            className="form-control col-sm-2 btn btn-primary"
+            disabled={!gradeLevel}
+            onClick={(e) => {
+              e.preventDefault();
+              if (gradeLevel) {
+                var slicer = LevelSlicer.solve(
+                  sliceCount,
+                  gradeLevel,
+                  initializer,
+                  move,
+                  speed,
+                  relMoves,
+                  groupRestrict,
+                  groupTolerance,
+                  iterations
+                );
+                setLevelSlicer(slicer);
+                setSlicerState(slicer.statusString());
+                updateResult(slicer);
+              }
+            }}
+          >
+            Lösung berechnen
           </button>
           <label htmlFor="iterInput" className="col-sm-2 col-form-label">
             Durchläufe:
@@ -268,12 +269,11 @@ const Input: React.FC<Props> = () => {
             value={iterations}
           />
         </div>
-        <p>{slicerState ? slicerState : "no Solution calculated"}</p>
+        <p>{slicerState ? slicerState : 'no Solution calculated'}</p>
       </div>
 
       <h3>Ausgabe</h3>
       <Result holder={result} />
-
     </main>
   );
 };

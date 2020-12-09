@@ -1,4 +1,4 @@
-import { GradeLevel } from "./GradeLevel";
+import { GradeLevel } from './GradeLevel';
 
 interface ResultProvider {
   pupilTable(): any[];
