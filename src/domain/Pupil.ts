@@ -33,7 +33,7 @@ export class Pupil {
       lastname: this.lastname,
       firstname: this.firstname,
       combi: this.courseCombination.getIndex(),
-      group: "--"
+      group: '--',
     };
     this.courseCombination.getCourses().forEach((course, i) => {
       lo['block-' + i] = course == null ? '--' : course.getName();

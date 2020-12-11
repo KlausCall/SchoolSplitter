@@ -79,6 +79,7 @@ export class CombiDistribution {
    * find moves for optimization of groupp size
    *
    */
+<<<<<<< HEAD:src/domain/solve/CombiDistribution.ts
   public findGroupSizeMoves(resultList: Move[], weighter: (size:number, max: number) => number) {
     var courseSizes: number[][];
     var maxSizes: number[];
@@ -116,6 +117,13 @@ export class CombiDistribution {
    *
    */
   public findContactMoves(resultList: Move[]) {
+=======
+  public findMoves(
+    minProgress: number,
+    onlyOversizedCourses: boolean,
+    resultList: Move[]
+  ) {
+>>>>>>> e4b46d20ed9ff0e4b0c738c0a40fff3a73f074bf:src/domain/CombiDistribution.ts
     var courseSizes: number[][];
     var maxSizes: number[];
     var sources: number[];
@@ -129,6 +137,19 @@ export class CombiDistribution {
     sources = this.memberCounts
       .map((_, i) => i)
       .filter((i) => this.memberCounts[i] > 0);
+<<<<<<< HEAD:src/domain/solve/CombiDistribution.ts
+=======
+    if (onlyOversizedCourses) {
+      sources = sources.filter((slice) => {
+        return this.courseIndices.some(
+          (courseIdx) => courseSizes[courseIdx][slice] > maxSizes[courseIdx]
+        );
+      });
+    }
+    if (sources.length === 0) {
+      return;
+    }
+>>>>>>> e4b46d20ed9ff0e4b0c738c0a40fff3a73f074bf:src/domain/CombiDistribution.ts
 
     // find allowed targets group indices with size of all courses less than maxSize
     targets = this.memberCounts
@@ -147,7 +168,7 @@ export class CombiDistribution {
         targets.length === 1 &&
         sources[0] === targets[0])
     ) {
-      return ;
+      return;
     }
 
     // calculate expected changes of contacts
@@ -242,8 +263,8 @@ export class CombiDistribution {
       var max = pos + count;
       while (pos < max) {
         pupilsTable[this.combi.getMember(pos).getIndex()].group = i;
-        pos ++;
+        pos++;
       }
-    }) 
+    });
   }
 }

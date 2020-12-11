@@ -4,7 +4,7 @@ import { CourseCombination } from './CourseCombination';
 import { Pupil } from './Pupil';
 import ResultProvider from './ResultProvider';
 
-export class GradeLevel implements ResultProvider{
+export class GradeLevel implements ResultProvider {
   private pupilList: Pupil[];
   private courseList: Course[];
   private combinationList: CourseCombination[];
@@ -25,23 +25,21 @@ export class GradeLevel implements ResultProvider{
     var courseMap: Map<string, Course>;
     courseMap = new Map();
     pupilCourses = [];
-    data
-      .slice(1)
-      .forEach((fields) => {
-        if (fields.length > 2) {
-          const pupil = new Pupil(this.pupilList.length, fields[0], fields[1]);
-          this.pupilList.push(pupil);
-          currentCourses = [];
-          pupilCourses.push(currentCourses);
-          fields.slice(2).forEach((courseName) => {
-            if (courseName.length > 0) {
-              const course = this.getCourse(courseMap, courseName);
-              course.addMember(pupil);
-              currentCourses.push(course);
-            }
-          });
-        }
-      });
+    data.slice(1).forEach((fields) => {
+      if (fields.length > 2) {
+        const pupil = new Pupil(this.pupilList.length, fields[0], fields[1]);
+        this.pupilList.push(pupil);
+        currentCourses = [];
+        pupilCourses.push(currentCourses);
+        fields.slice(2).forEach((courseName) => {
+          if (courseName.length > 0) {
+            const course = this.getCourse(courseMap, courseName);
+            course.addMember(pupil);
+            currentCourses.push(course);
+          }
+        });
+      }
+    });
     this.initBlocks();
     this.sortCoursesByBlock(pupilCourses);
     this.initCourseCombinations(pupilCourses);

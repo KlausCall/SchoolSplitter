@@ -5,7 +5,7 @@ import ResultProvider from '../ResultProvider';
 import { ModeSwitchMove } from './ModeSwitchMove';
 import { FinishMove } from './FinishMove';
 
-export class LevelSlicer implements ResultProvider{
+export class LevelSlicer implements ResultProvider {
   readonly size: number;
   readonly level: GradeLevel;
   readonly distributions: CombiDistribution[];
@@ -29,20 +29,38 @@ export class LevelSlicer implements ResultProvider{
     groupRestrict: string,
     groupTolerance: number,
     iterations: number
-  ) : LevelSlicer {
-    var best : LevelSlicer;
-    var contacts : number;
+  ): LevelSlicer {
+    var best: LevelSlicer;
+    var contacts: number;
     var count: number = 0;
 
-    best = new LevelSlicer(aSize, aLevel,initializer,move, speed, moveTolerance, groupRestrict,groupTolerance);
+    best = new LevelSlicer(
+      aSize,
+      aLevel,
+      initializer,
+      move,
+      speed,
+      moveTolerance,
+      groupRestrict,
+      groupTolerance
+    );
     best.optimize();
     contacts = best.getContacts();
     do {
-      var current : LevelSlicer;
-      var currentContacts : number;
-      
-      count ++;
-      current = new LevelSlicer(aSize, aLevel,initializer,move, speed, moveTolerance, groupRestrict,groupTolerance);
+      var current: LevelSlicer;
+      var currentContacts: number;
+
+      count++;
+      current = new LevelSlicer(
+        aSize,
+        aLevel,
+        initializer,
+        move,
+        speed,
+        moveTolerance,
+        groupRestrict,
+        groupTolerance
+      );
       current.optimize();
       currentContacts = current.getContacts();
       if (currentContacts < contacts) {
@@ -81,8 +99,8 @@ export class LevelSlicer implements ResultProvider{
       dist.fillConnected(this.distributions)
     );
     // init groups
-    this.cfgString = "Groups: " + this.size + "; ";
-    this.cfgString += "Initial Groups: " + initializer + "; ";
+    this.cfgString = 'Groups: ' + this.size + '; ';
+    this.cfgString += 'Initial Groups: ' + initializer + '; ';
     if (initializer === 'random') {
       this.initRandomlyDistributed();
     } else {
@@ -90,19 +108,19 @@ export class LevelSlicer implements ResultProvider{
     }
     // init max sizes
     this.reduceGroups = true;
-    this.cfgString = this.cfgString +'Group size: ';
+    this.cfgString = this.cfgString + 'Group size: ';
     this.maxSizes = new Array(this.courseSizes.length);
     if (groupRestrict === 'max') {
       var max = this.level
-      .getCourses()
-      .reduce((res, course) => Math.max(res, course.getMemberCount()), 0);
+        .getCourses()
+        .reduce((res, course) => Math.max(res, course.getMemberCount()), 0);
       max = Math.ceil(max / this.size) + groupTolerance;
       this.maxSizes.fill(max);
       this.cfgString += 'max ' + max + '; ';
     } else if (groupRestrict === 'each') {
       this.level.getCourses().forEach((course) => {
         this.maxSizes[course.getIndex()] =
-        Math.ceil(course.getMemberCount() / this.size) + groupTolerance;
+          Math.ceil(course.getMemberCount() / this.size) + groupTolerance;
       });
       this.cfgString += 'by course with tolerance ' + groupTolerance + '; ';
     } else {
@@ -121,7 +139,7 @@ export class LevelSlicer implements ResultProvider{
       ? 'Move: select random; '
       : 'Move: use first best; ';
     this.moveTolerance = moveTolerance / 100;
-    this.cfgString += "Move tolerance: " + moveTolerance + "; "
+    this.cfgString += 'Move tolerance: ' + moveTolerance + '; ';
   }
 
   private initAllIntoFirstSlice() {
@@ -144,7 +162,7 @@ export class LevelSlicer implements ResultProvider{
   }
 
   public optimize() {
-    while ( !this.finished) {
+    while (!this.finished) {
       this.doMove();
     }
   }
@@ -155,6 +173,21 @@ export class LevelSlicer implements ResultProvider{
   public doMove() {
     var candidateMoves: Move[];
 
+<<<<<<< HEAD:src/domain/solve/LevelSlicer.ts
+=======
+    // check for force downsize
+    // var force = this.courseSizes.some((sliceSizes, courseIndex) => {
+    //   return sliceSizes.some((siz) => siz > this.maxSizes[courseIndex]);
+    // });
+    // if in reduce groups mode contacts may grow
+    if (this.reduceGroups) {
+      neededProgess = -(
+        this.level.getMembers().length *
+        (this.level.getMembers().length - 1)
+      );
+    }
+
+>>>>>>> e4b46d20ed9ff0e4b0c738c0a40fff3a73f074bf:src/domain/LevelSlicer.ts
     // calculate candidates
     candidateMoves = [];
     if (this.reduceGroups) {
@@ -177,6 +210,7 @@ export class LevelSlicer implements ResultProvider{
       }
     }
 
+<<<<<<< HEAD:src/domain/solve/LevelSlicer.ts
     // sort candidates
     candidateMoves.sort((a, b) => b.progress - a.progress);
     // select candidate
@@ -186,17 +220,45 @@ export class LevelSlicer implements ResultProvider{
       move = candidateMoves[0];
     } else {
       var idx: number; 
+=======
+    // change mode if no moves available
+    if (candidateMoves.length === 0) {
+      if (this.reduceGroups) {
+        this.reduceGroups = false;
+      } else {
+        this.finished = true;
+      }
+    } else {
+      // sort candidates
+      candidateMoves.sort((a, b) => b.progress - a.progress);
+      // select candidate
+      var idx: number;
+>>>>>>> e4b46d20ed9ff0e4b0c738c0a40fff3a73f074bf:src/domain/LevelSlicer.ts
       if (this.moveRandom) {
-        idx = Math.floor(Math.random() * candidateMoves.length * this.moveTolerance);
+        idx = Math.floor(
+          Math.random() * candidateMoves.length * this.moveTolerance
+        );
       } else {
         idx = 0;
       }
       // take first or last move
+<<<<<<< HEAD:src/domain/solve/LevelSlicer.ts
       if (this.moveSlowly) {
+=======
+      var move;
+      if (this.reduceGroups || !this.moveSlowly) {
+>>>>>>> e4b46d20ed9ff0e4b0c738c0a40fff3a73f074bf:src/domain/LevelSlicer.ts
         move = candidateMoves[candidateMoves.length - 1 - idx];
       } else {
         move = candidateMoves[idx];
       }
+<<<<<<< HEAD:src/domain/solve/LevelSlicer.ts
+=======
+
+      // execute move
+      this.distributions[move.combination].doMove(move);
+      this.moveList.push(move);
+>>>>>>> e4b46d20ed9ff0e4b0c738c0a40fff3a73f074bf:src/domain/LevelSlicer.ts
     }
     
     // execute move
@@ -239,9 +301,11 @@ export class LevelSlicer implements ResultProvider{
 
   public getOversize() {
     return this.courseSizes.reduce((sum, groupSizes, i) => {
-      return groupSizes.reduce((res, siz) => 
-        res + Math.max(0, siz - this.maxSizes[i]), sum)
-    } , 0);
+      return groupSizes.reduce(
+        (res, siz) => res + Math.max(0, siz - this.maxSizes[i]),
+        sum
+      );
+    }, 0);
   }
 
   public getContacts(slice?: number): number {
@@ -263,7 +327,6 @@ export class LevelSlicer implements ResultProvider{
    */
   public configString() {
     return this.cfgString;
-    
   }
 
   public getLevel() {
@@ -271,8 +334,11 @@ export class LevelSlicer implements ResultProvider{
   }
 
   public statusString() {
-    return `Groups: ${this.size}; Contacts: ${this.getContacts()}; Moves: ${this.moveList.length
-      }; Finished: ${this.finished}; Fixing sizes: ${this.reduceGroups}; Oversize: ${this.getOversize()}`;
+    return `Groups: ${this.size}; Contacts: ${this.getContacts()}; Moves: ${
+      this.moveList.length
+    }; Finished: ${this.finished}; Fixing sizes: ${
+      this.reduceGroups
+    }; Oversize: ${this.getOversize()}`;
   }
 
   public print() {
@@ -312,8 +378,7 @@ export class LevelSlicer implements ResultProvider{
 
   public pupilTable() {
     var table: any[] = this.level.pupilTable();
-    this.distributions.forEach(dist => dist.setPupilsGroups(table));
+    this.distributions.forEach((dist) => dist.setPupilsGroups(table));
     return table;
   }
-
 }
