@@ -1,6 +1,11 @@
 # Changelog
 
 ## Unreleased
+Changes in the upcoming version are documented here.
+
+---
+
+## v1.1.0
  - added feature *undo step* 
  - better algorihm to reduce group size
 
