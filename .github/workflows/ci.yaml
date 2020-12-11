@@ -2,7 +2,7 @@ name: Build, Deploy & Release
 on:
   create:
     tags:
-      - 'v*'
+      - 'v*.*.*'
 jobs:
   ci:
     runs-on: ubuntu-latest
