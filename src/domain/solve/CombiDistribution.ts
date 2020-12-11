@@ -76,12 +76,46 @@ export class CombiDistribution {
 
   /**
    * optimization workhorse.
-   * find moves for optimization.
+   * find moves for optimization of groupp size
    *
-   * @param minProgress minimal progess in contacts
-   * @param maxSize maximal membe count of groups
    */
-  public findMoves(minProgress: number, onlyOversizedCourses: boolean, resultList: Move[]) {
+  public findGroupSizeMoves(resultList: Move[], weighter: (size:number, max: number) => number) {
+    var courseSizes: number[][];
+    var maxSizes: number[];
+    var sourceAdvantages: number[];
+    var targetPenaltys: number[];
+
+    courseSizes = this.slicer.getCourseSizes();
+    maxSizes = this.slicer.getMaxSizes();
+
+    // calculate expected weighted changes of group size
+    sourceAdvantages = this.memberCounts.map((members, slice) => {
+      return members === 0 ? 0 
+        : this.courseIndices.reduce((sum , courseIdx) => sum + weighter(courseSizes[courseIdx][slice] , maxSizes[courseIdx]) , 0 );
+    });
+    targetPenaltys = this.memberCounts.map((members, slice) => {
+      return members === 0 ? 0 
+        : this.courseIndices.reduce((sum , courseIdx) => sum + weighter(courseSizes[courseIdx][slice] + 1, maxSizes[courseIdx]) , 0 );
+    });
+
+    sourceAdvantages.forEach((adv, from) => {
+      if (adv > 0) {
+        targetPenaltys.forEach((pen, to) => {
+          var progress = adv - pen;
+          if (progress > 0) {
+            resultList.push(new Move(this.getIndex(), from, to, progress))
+          }
+        })
+      }
+    })
+  }
+
+  /**
+   * optimization workhorse.
+   * find moves for contact optimization.
+   *
+   */
+  public findContactMoves(resultList: Move[]) {
     var courseSizes: number[][];
     var maxSizes: number[];
     var sources: number[];
@@ -91,22 +125,12 @@ export class CombiDistribution {
 
     courseSizes = this.slicer.getCourseSizes();
     maxSizes = this.slicer.getMaxSizes();
-    // find allowed sources
+    // find allowed source group indices
     sources = this.memberCounts
       .map((_, i) => i)
       .filter((i) => this.memberCounts[i] > 0);
-    if (onlyOversizedCourses) {
-      sources = sources.filter((slice) => {
-        return this.courseIndices.some(
-          (courseIdx) => courseSizes[courseIdx][slice] > maxSizes[courseIdx]
-        );
-      });
-    }
-    if (sources.length === 0) {
-      return ;
-    }
 
-    // find allowed targets with size of all courses less than maxSize
+    // find allowed targets group indices with size of all courses less than maxSize
     targets = this.memberCounts
       .map((_, i) => i)
       .filter((slice) => {
@@ -135,7 +159,7 @@ export class CombiDistribution {
       targets.forEach((to, toIdx) => {
         if (
           from !== to &&
-          sourceAdvantages[fromIdx] - targetPenaltys[toIdx] >= minProgress
+          sourceAdvantages[fromIdx] - targetPenaltys[toIdx] > 0
         ) {
           resultList.push(
             new Move(

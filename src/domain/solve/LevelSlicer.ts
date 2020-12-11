@@ -153,37 +153,38 @@ export class LevelSlicer implements ResultProvider{
    * optimization workhouse
    */
   public doMove() {
-    var neededProgess = 1;
     var candidateMoves: Move[];
-
-    // check for force downsize
-    // var force = this.courseSizes.some((sliceSizes, courseIndex) => {
-    //   return sliceSizes.some((siz) => siz > this.maxSizes[courseIndex]);
-    // });
-    // if in reduce groups mode contacts may grow
-    if (this.reduceGroups) {
-      neededProgess = - (this.level.getMembers().length * (this.level.getMembers().length - 1));
-    }
 
     // calculate candidates
     candidateMoves = [];
-    this.distributions.forEach((dist) => {
-      dist.findMoves(neededProgess, this.reduceGroups, candidateMoves);
-    });
-
-    // change mode if no moves available
-    if (candidateMoves.length === 0) {
-        if (this.reduceGroups) {
-            this.reduceGroups = false;
-            this.moveList.push(new ModeSwitchMove());
-        } else {
-            this.finished = true;
-            this.moveList.push(new FinishMove());
-        }
+    if (this.reduceGroups) {
+      this.distributions.forEach((dist) => {
+        dist.findGroupSizeMoves(candidateMoves, (size, max) => ((size > max) ? max : 0))
+      });
+      if (candidateMoves.length === 0) {
+        this.reduceGroups = false;
+        this.moveList.push(new ModeSwitchMove());
+        return;
+      }
     } else {
-      // sort candidates
-      candidateMoves.sort((a, b) => b.progress - a.progress);
-      // select candidate
+      this.distributions.forEach((dist) => {
+        dist.findContactMoves(candidateMoves);
+      });
+      if (candidateMoves.length === 0) {
+        this.finished = true;
+        this.moveList.push(new FinishMove());
+        return;
+      }
+    }
+
+    // sort candidates
+    candidateMoves.sort((a, b) => b.progress - a.progress);
+    // select candidate
+    var move;
+    if (this.reduceGroups) {
+      // always use best move
+      move = candidateMoves[0];
+    } else {
       var idx: number; 
       if (this.moveRandom) {
         idx = Math.floor(Math.random() * candidateMoves.length * this.moveTolerance);
@@ -191,17 +192,17 @@ export class LevelSlicer implements ResultProvider{
         idx = 0;
       }
       // take first or last move
-      var move;
-      if (this.reduceGroups ||  ! this.moveSlowly) {
+      if (this.moveSlowly) {
         move = candidateMoves[candidateMoves.length - 1 - idx];
       } else {
         move = candidateMoves[idx];
       }
-      
-      // execute move
-      this.distributions[move.combination].doMove(move);
-      this.moveList.push(move);
     }
+    
+    // execute move
+    this.distributions[move.combination].doMove(move);
+    this.moveList.push(move);
+    console.log("MOVED: " +JSON.stringify(move));
   }
 
   public undoLastMove() {
