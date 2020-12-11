@@ -4,6 +4,7 @@ import { GradeLevel } from '../domain/GradeLevel';
 import { LevelSlicer } from '../domain/solve/LevelSlicer';
 import ResultProvider from '../domain/ResultProvider';
 import Result from './Result';
+import NrwMode from './NrwMode';
 
 interface Props {}
 
@@ -34,7 +35,8 @@ const Input: React.FC<Props> = () => {
       <h3>Eingabe</h3>
       <div className="mb-3">
         <label htmlFor="csvUpload" className="form-label">
-          CSV Datei mit Daten auswählen:
+            <span>CSV Datei mit Daten auswählen: <b><i>oder:</i></b>&nbsp;</span>
+            <NrwMode></NrwMode>
         </label>
         <CSVReader
           inputId="csvUpload"
