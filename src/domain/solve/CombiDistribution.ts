@@ -94,8 +94,7 @@ export class CombiDistribution {
         : this.courseIndices.reduce((sum , courseIdx) => sum + weighter(courseSizes[courseIdx][slice] , maxSizes[courseIdx]) , 0 );
     });
     targetPenaltys = this.memberCounts.map((members, slice) => {
-      return members === 0 ? 0 
-        : this.courseIndices.reduce((sum , courseIdx) => sum + weighter(courseSizes[courseIdx][slice] + 1, maxSizes[courseIdx]) , 0 );
+      return this.courseIndices.reduce((sum , courseIdx) => sum + weighter(courseSizes[courseIdx][slice] + 1, maxSizes[courseIdx]) , 0 );
     });
 
     sourceAdvantages.forEach((adv, from) => {

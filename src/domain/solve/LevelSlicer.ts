@@ -222,7 +222,7 @@ export class LevelSlicer implements ResultProvider {
     // execute move
     this.distributions[move.combination].doMove(move);
     this.moveList.push(move);
-    console.log("MOVED: " +JSON.stringify(move));
+    // console.log("MOVED: " +JSON.stringify(move));
   }
 
   public undoLastMove() {
