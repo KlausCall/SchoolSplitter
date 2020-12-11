@@ -1,13 +1,8 @@
 # Changelog
 
 ## Unreleased
-<<<<<<< HEAD
  - added feature *undo step* 
  - better algorihm to reduce group size
-=======
-
-Changes in the upcoming version are documented here.
->>>>>>> e4b46d20ed9ff0e4b0c738c0a40fff3a73f074bf
 
 ---
 

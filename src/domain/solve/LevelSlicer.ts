@@ -173,21 +173,6 @@ export class LevelSlicer implements ResultProvider {
   public doMove() {
     var candidateMoves: Move[];
 
-<<<<<<< HEAD:src/domain/solve/LevelSlicer.ts
-=======
-    // check for force downsize
-    // var force = this.courseSizes.some((sliceSizes, courseIndex) => {
-    //   return sliceSizes.some((siz) => siz > this.maxSizes[courseIndex]);
-    // });
-    // if in reduce groups mode contacts may grow
-    if (this.reduceGroups) {
-      neededProgess = -(
-        this.level.getMembers().length *
-        (this.level.getMembers().length - 1)
-      );
-    }
-
->>>>>>> e4b46d20ed9ff0e4b0c738c0a40fff3a73f074bf:src/domain/LevelSlicer.ts
     // calculate candidates
     candidateMoves = [];
     if (this.reduceGroups) {
@@ -210,7 +195,6 @@ export class LevelSlicer implements ResultProvider {
       }
     }
 
-<<<<<<< HEAD:src/domain/solve/LevelSlicer.ts
     // sort candidates
     candidateMoves.sort((a, b) => b.progress - a.progress);
     // select candidate
@@ -220,20 +204,6 @@ export class LevelSlicer implements ResultProvider {
       move = candidateMoves[0];
     } else {
       var idx: number; 
-=======
-    // change mode if no moves available
-    if (candidateMoves.length === 0) {
-      if (this.reduceGroups) {
-        this.reduceGroups = false;
-      } else {
-        this.finished = true;
-      }
-    } else {
-      // sort candidates
-      candidateMoves.sort((a, b) => b.progress - a.progress);
-      // select candidate
-      var idx: number;
->>>>>>> e4b46d20ed9ff0e4b0c738c0a40fff3a73f074bf:src/domain/LevelSlicer.ts
       if (this.moveRandom) {
         idx = Math.floor(
           Math.random() * candidateMoves.length * this.moveTolerance
@@ -242,23 +212,11 @@ export class LevelSlicer implements ResultProvider {
         idx = 0;
       }
       // take first or last move
-<<<<<<< HEAD:src/domain/solve/LevelSlicer.ts
       if (this.moveSlowly) {
-=======
-      var move;
-      if (this.reduceGroups || !this.moveSlowly) {
->>>>>>> e4b46d20ed9ff0e4b0c738c0a40fff3a73f074bf:src/domain/LevelSlicer.ts
         move = candidateMoves[candidateMoves.length - 1 - idx];
       } else {
         move = candidateMoves[idx];
       }
-<<<<<<< HEAD:src/domain/solve/LevelSlicer.ts
-=======
-
-      // execute move
-      this.distributions[move.combination].doMove(move);
-      this.moveList.push(move);
->>>>>>> e4b46d20ed9ff0e4b0c738c0a40fff3a73f074bf:src/domain/LevelSlicer.ts
     }
     
     // execute move
