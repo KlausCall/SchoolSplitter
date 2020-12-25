@@ -35,8 +35,7 @@ const Input: React.FC<Props> = () => {
       <h3>Eingabe</h3>
       <div className="mb-3">
         <label htmlFor="csvUpload" className="form-label">
-            <span>CSV Datei mit Daten auswählen: <b><i>oder:</i></b>&nbsp;</span>
-            <NrwMode></NrwMode>
+            <span>CSV Datei mit Daten auswählen:</span>
         </label>
         <CSVReader
           inputId="csvUpload"
