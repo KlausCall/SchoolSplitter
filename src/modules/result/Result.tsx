@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ResultProvider from '../domain/ResultProvider';
+import ResultProvider from '../../domain/ResultProvider';
 import ResultTable from './ResultTable';
 
 const Result: React.FC<{ holder: ResultProvider[] }> = ({ holder }) => {

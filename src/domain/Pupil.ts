@@ -6,7 +6,7 @@ export class Pupil {
   readonly lastname: string;
   private courseCombination!: CourseCombination;
 
-  constructor(theNo: number, lastname: string, firstname: string) {
+  constructor(theNo: number, firstname: string, lastname: string) {
     this.no = theNo;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -30,8 +30,8 @@ export class Pupil {
   public asLO() {
     var lo: any = {
       no: this.no,
-      lastname: this.lastname,
       firstname: this.firstname,
+      lastname: this.lastname,
       combi: this.courseCombination.getIndex(),
       group: '--',
     };

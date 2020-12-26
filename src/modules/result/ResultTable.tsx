@@ -32,29 +32,31 @@ const ResultTable: React.FC<{
           CSV herunterladen
         </a>
       </div>
-      <table className="table table-bordered table-sm">
-        <thead className="thead-light">
-          <tr>
-            {keys.map((k) => (
-              <th>{k}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {list.map((obj, i) => {
-            return (
-              <tr
-                className={selectedRows?.includes(i) ? 'table-info' : ''}
-                onClick={(ev) => updateSelectedRow(i)}
-              >
-                {keys.map((k) => (
-                  <td>{obj[k]}</td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="table-responsive">
+        <table className="table table-bordered table-sm">
+          <thead className="thead-light">
+            <tr>
+              {keys.map((k) => (
+                <th>{k}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((obj, i) => {
+              return (
+                <tr
+                  className={selectedRows?.includes(i) ? 'table-info' : ''}
+                  onClick={(ev) => updateSelectedRow(i)}
+                >
+                  {keys.map((k) => (
+                    <td>{obj[k]}</td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
