@@ -1,6 +1,5 @@
 body {
   padding-top: 4.5rem;
-  padding-bottom: 4.5rem;
 }
 
 .modal-backdrop {
@@ -12,6 +11,5 @@ body {
 }
 
 .modal-content {
-  margin-bottom: 3.5rem;
   z-index: 1100 !important;
 }
