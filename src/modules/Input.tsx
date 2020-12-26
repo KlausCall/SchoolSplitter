@@ -53,60 +53,60 @@ const Input: React.FC<Props> = () => {
       </div>
 
       <h3>Berechnen</h3>
+      <div className="form-row">
+        <div className="form-group col-md-4">
+          <label htmlFor="sliceInput" className="form-label">
+            Gruppen Anzahl: <b>{sliceCount}</b>
+          </label>
+          <input
+            className="form-control-range"
+            type="range"
+            step="1"
+            id="sliceInput"
+            min="2"
+            max="10"
+            onChange={(e) => setSliceCount(e.target.valueAsNumber)}
+            value={sliceCount}
+          />
+        </div>
+        <div className="form-group col-md-4">
+          <label htmlFor="resrictSelect" className="form-label">
+            Begrenzung Gruppen Größe:
+          </label>
+          <select
+            id="resrictSelect"
+            className="form-control"
+            onChange={(e) => setGroupRestrict(e.target.value)}
+            value={groupRestrict}
+          >
+            <option value="none">Keine Begrenzung</option>
+            <option value="max">anhand größtem Kurs</option>
+            <option value="each">je Kurs</option>
+          </select>
+        </div>
+        <div className="form-group col-md-4">
+          <label htmlFor="toleranceInput" className="form-label">
+            Toleranz Gruppen Größe: <b>{groupTolerance}</b>
+          </label>
+          <input
+            type="range"
+            id="toleranceInput"
+            className="form-control"
+            min="0"
+            max="10"
+            step="1"
+            onChange={(e) => setGroupTolerance(e.target.valueAsNumber)}
+            value={groupTolerance}
+          />
+        </div>
+      </div>
+
       <details>
         <summary>
-          <h5 style={{ display: 'inline' }}>Konfiguration</h5>
+          <h5 style={{ display: 'inline' }}>Berechnungs Optionen</h5>
         </summary>
-        <form>
           <div className="form-row">
-            <div className="form-group col-md-4">
-              <label htmlFor="sliceInput" className="form-label">
-                Gruppen Anzahl: <b>{sliceCount}</b>
-              </label>
-              <input
-                className="form-control-range"
-                type="range"
-                step="1"
-                id="sliceInput"
-                min="2"
-                max="10"
-                onChange={(e) => setSliceCount(e.target.valueAsNumber)}
-                value={sliceCount}
-              />
-            </div>
-            <div className="form-group col-md-4">
-              <label htmlFor="resrictSelect" className="form-label">
-                Begrenzung Gruppen Größe:
-              </label>
-              <select
-                id="resrictSelect"
-                className="form-control"
-                onChange={(e) => setGroupRestrict(e.target.value)}
-                value={groupRestrict}
-              >
-                <option value="none">Keine Begrenzung</option>
-                <option value="max">anhand größtem Kurs</option>
-                <option value="each">je Kurs</option>
-              </select>
-            </div>
-            <div className="form-group col-md-4">
-              <label htmlFor="toleranceInput" className="form-label">
-                Toleranz Gruppen Größe: <b>{groupTolerance}</b>
-              </label>
-              <input
-                type="range"
-                id="toleranceInput"
-                className="form-control"
-                min="0"
-                max="10"
-                step="1"
-                onChange={(e) => setGroupTolerance(e.target.valueAsNumber)}
-                value={groupTolerance}
-              />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-group col-md-3">
+            <div className="form-group col-md-2">
               <label htmlFor="initializerSelect" className="form-label">
                 Initialisierung:
               </label>
@@ -120,7 +120,7 @@ const Input: React.FC<Props> = () => {
                 <option value="random">zufällig verteilt</option>
               </select>
             </div>
-            <div className="form-group col-md-3">
+            <div className="form-group col-md-2">
               <label htmlFor="speedSelect" className="form-label">
                 Optimierung:
               </label>
@@ -134,7 +134,7 @@ const Input: React.FC<Props> = () => {
                 <option value="fast">Schnell</option>
               </select>
             </div>
-            <div className="form-group col-md-3">
+            <div className="form-group col-md-2">
               <label htmlFor="moveSelect" className="form-label">
                 Schrittauswahl:
               </label>
@@ -148,7 +148,7 @@ const Input: React.FC<Props> = () => {
                 <option value="random">Zufällig</option>
               </select>
             </div>
-            <div className="form-group col-md-3">
+            <div className="form-group col-md-2">
               <label htmlFor="relmovesInput" className="form-label">
                 Schrittauswahl aus: <b>{relMoves} % </b>
               </label>
@@ -163,6 +163,24 @@ const Input: React.FC<Props> = () => {
                 value={relMoves}
               />
             </div>
+            <div className="form-group col-md-2">
+              <label htmlFor="iterInput" className="form-label">
+                Durchläufe: <b>{iterations}</b>
+              </label>
+              <input
+                type="range"
+                id="iterInput"
+                className="form-control-range"
+                step="50"
+                min="50"
+                max="1000"
+                onChange={(e) => setIterations(e.target.valueAsNumber)}
+                value={iterations}
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
             <div className="form-group col-md-2">
               <button
                 className="form-control btn btn-outline-secondary"
@@ -243,7 +261,7 @@ const Input: React.FC<Props> = () => {
               ? levelSlicer.configString()
               : 'Bitte Teilung erzeugen'}
           </p>
-        </form>
+          <p>{slicerState ? slicerState : 'no Solution calculated'}</p>
       </details>
       <div>
         <div className="form-group row container-fluid">
@@ -272,21 +290,7 @@ const Input: React.FC<Props> = () => {
           >
             Lösung berechnen
           </button>
-          <label htmlFor="iterInput" className="col-sm-2 col-form-label">
-            Durchläufe:
-          </label>
-          <input
-            type="number"
-            id="iterInput"
-            className="col-sm-2 form-control"
-            step="50"
-            min="50"
-            max="1000"
-            onChange={(e) => setIterations(e.target.valueAsNumber)}
-            value={iterations}
-          />
         </div>
-        <p>{slicerState ? slicerState : 'no Solution calculated'}</p>
       </div>
 
       <h3>Ausgabe</h3>
