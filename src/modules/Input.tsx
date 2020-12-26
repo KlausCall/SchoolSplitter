@@ -4,7 +4,7 @@ import { GradeLevel } from '../domain/GradeLevel';
 import { LevelSlicer } from '../domain/solve/LevelSlicer';
 import ResultProvider from '../domain/ResultProvider';
 import Result from './Result';
-import NrwMode from './NrwMode';
+import LevelDisplay from './LevelDisplay';
 
 interface Props {}
 
@@ -49,7 +49,7 @@ const Input: React.FC<Props> = () => {
             updateResult(level);
           }}
         />
-        <p>{gradeLevel ? gradeLevel.displayString() : 'Bitte Daten laden.'}</p>
+        <LevelDisplay level={gradeLevel}></LevelDisplay>
       </div>
 
       <h3>Berechnen</h3>
