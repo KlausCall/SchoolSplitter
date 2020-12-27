@@ -5,6 +5,7 @@ import { LevelSlicer } from '../domain/solve/LevelSlicer';
 import ResultProvider from '../domain/ResultProvider';
 import Result from './result/Result';
 import LevelDisplay from './LevelDisplay';
+import Papa from 'papaparse';
 
 interface Props {}
 
@@ -30,23 +31,41 @@ const Input: React.FC<Props> = () => {
     }
   }
 
+  function loadGradeData(data: string[][]) {
+    const level = new GradeLevel(data);
+    setGradeLevel(level);
+    setLevelSlicer(undefined);
+    setSlicerState('');
+    updateResult(level);
+  }
+
   return (
     <main className="container-fluid">
       <h3>Eingabe</h3>
       <div className="mb-3">
-        <label htmlFor="csvUpload" className="form-label">
-            <span>CSV Datei mit Daten auswählen:</span>
+        <label htmlFor="csvUpload" className="form-label d-flex justify-content-between">
+            <span className="pt-2 pl-3" >CSV Datei mit Daten auswählen:</span>
+            <button
+              className="btn btn-outline-secondary "
+              onClick={(e) => {
+                e.preventDefault();
+                Papa.parse<string[]>('/samples/sample.csv', {
+                  download: true,
+                  complete: (data) => {
+                    loadGradeData(data.data);
+                  }
+                })
+              }}
+            >
+              Beispiel Daten laden
+            </button>
         </label>
         <CSVReader
           inputId="csvUpload"
-          cssInputClass="form-control"
+          cssInputClass="form-control "
           parserOptions={{}}
           onFileLoaded={(data) => {
-            const level = new GradeLevel(data);
-            setGradeLevel(level);
-            setLevelSlicer(undefined);
-            setSlicerState('');
-            updateResult(level);
+            loadGradeData(data);
           }}
         />
         <LevelDisplay level={gradeLevel}></LevelDisplay>
@@ -263,7 +282,7 @@ const Input: React.FC<Props> = () => {
           </p>
           <p>{slicerState ? slicerState : 'no Solution calculated'}</p>
       </details>
-      <div>
+      <div className="mt-3">
         <div className="form-group row container-fluid">
           <button
             className="form-control col-sm-2 btn btn-primary"

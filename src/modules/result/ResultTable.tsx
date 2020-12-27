@@ -37,7 +37,7 @@ const ResultTable: React.FC<{
           <thead className="thead-light">
             <tr>
               {keys.map((k) => (
-                <th>{k}</th>
+                <th><div data-toggle="tooltip" data-placement="bottom" title="Hooray!">{k}</div></th>
               ))}
             </tr>
           </thead>
