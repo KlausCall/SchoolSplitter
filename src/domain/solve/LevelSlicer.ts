@@ -4,6 +4,7 @@ import { Move } from './Move';
 import ResultProvider from '../ResultProvider';
 import { ModeSwitchMove } from './ModeSwitchMove';
 import { FinishMove } from './FinishMove';
+import { NumberCol } from '../../modules/result/NumberCol';
 
 export class LevelSlicer implements ResultProvider {
   readonly size: number;
@@ -314,29 +315,45 @@ export class LevelSlicer implements ResultProvider {
     this.level.getCourses().forEach((course) => {
       var lo = course.asLO();
       for (let i = 0; i < this.size; i++) {
-        lo['Group-' + i] = this.courseSizes[course.getIndex()][i];
+        lo['group-' + (i + 1)] = this.courseSizes[course.getIndex()][i];
       }
       res.push(lo);
     });
     return res;
   }
 
+  public courseCols() {
+    var res = this.level.courseCols();
+    for (let i = 1; i <= this.size; i ++) {
+      res.push(new NumberCol(`group-${i}`, `G.${i} # Schüler`, `Anzahl Schüler des\nKurs in Gruppe ${i}`));
+   }
+    return res;
+  }
+
   public combiTable() {
     var res: Object[] = [];
     this.distributions.forEach((dist) => res.push(dist.asLO()));
-    var sum: any = { no: 'Summe' };
-    for (let i = 0; i < this.size; i++) {
-      sum['Count-' + i] = this.getMemberCount(i);
-      sum['CombiSize-' + i] = '--';
-      sum['Contacts-' + i] = this.getContacts(i);
-    }
-    res.push(sum);
+    // var sum: any = { no: 'Summe' };
+    // for (let i = 0; i < this.size; i++) {
+    //   sum['Count-' + i] = this.getMemberCount(i);
+    //   sum['CombiSize-' + i] = '--';
+    //   sum['Contacts-' + i] = this.getContacts(i);
+    // }
+    // res.push(sum);
     return res;
+  }
+
+  public combiCols() {
+    return CombiDistribution.loCols(this.level.getBlocks().length , this.size);
   }
 
   public pupilTable() {
     var table: any[] = this.level.pupilTable();
     this.distributions.forEach((dist) => dist.setPupilsGroups(table));
     return table;
+  }
+
+  public pupilCols() {
+    return this.level.pupilCols();
   }
 }

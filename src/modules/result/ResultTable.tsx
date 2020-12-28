@@ -1,22 +1,23 @@
 import React from 'react';
+import { Column } from './Column';
 
 const ResultTable: React.FC<{
-  list?: any[];
+  list: any[];
+  columns: Column<any>[]
   title: String;
   selections: number[];
   setSelection: any;
-}> = ({ list, title, selections, setSelection }) => {
+}> = ({ list, columns, title, selections, setSelection }) => {
   const selectedRows = selections;
   const updateSelectedRow = setSelection;
 
   if (!list || list.length === 0) {
     return null;
   }
-  var keys = Object.keys(list[0]);
   var csv = '';
-  csv = keys.reduce((res, k) => res + k + ';', csv) + '\r\n';
+  csv = columns.reduce((res, col) => res + col.title + ';', csv) + '\r\n';
   csv = list.reduce((resO, obj) => {
-    return keys.reduce((res, k) => res + obj[k] + ';', resO) + '\r\n';
+    return columns.reduce((res, col) => res + col.value(obj) + ';', resO) + '\r\n';
   }, csv);
   String.toString();
   var dataURL = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(csv);
@@ -36,8 +37,8 @@ const ResultTable: React.FC<{
         <table className="table table-bordered table-sm">
           <thead className="thead-light">
             <tr>
-              {keys.map((k) => (
-                <th><div data-toggle="tooltip" data-placement="bottom" title="Hooray!">{k}</div></th>
+              {columns.map((col) => (
+                <th><div data-toggle="tooltip" data-placement="bottom" title={col.tip}>{col.title}</div></th>
               ))}
             </tr>
           </thead>
@@ -48,8 +49,8 @@ const ResultTable: React.FC<{
                   className={selectedRows?.includes(i) ? 'table-info' : ''}
                   onClick={(ev) => updateSelectedRow(i)}
                 >
-                  {keys.map((k) => (
-                    <td>{obj[k]}</td>
+                  {columns.map((col) => (
+                    <td>{col.value(obj)}</td>
                   ))}
                 </tr>
               );

@@ -1,3 +1,5 @@
+import { NumberCol } from '../modules/result/NumberCol';
+import { StringCol } from '../modules/result/StringCol';
 import { CourseCombination } from './CourseCombination';
 
 export class Pupil {
@@ -29,15 +31,30 @@ export class Pupil {
    */
   public asLO() {
     var lo: any = {
-      no: this.no,
+      no: this.no + 1,
       firstname: this.firstname,
       lastname: this.lastname,
-      combi: this.courseCombination.getIndex(),
+      combi: this.courseCombination.getIndex() + 1,
       group: '--',
     };
     this.courseCombination.getCourses().forEach((course, i) => {
-      lo['block-' + i] = course == null ? '--' : course.getName();
+      lo['block-' + (i + 1)] = course == null ? '--' : course.getName();
     });
     return lo;
   }
+
+  public static loCols(blockCount: number) {
+    var res =  [
+      new NumberCol("no", "Nr.", "Nummer des Schülers"),
+      new StringCol("firstname", "Vorname", "Vorname des Schülers"),
+      new StringCol("lastname", "Nachname", "Nachname des Schülers"),
+      new NumberCol("combi", "Kombi.", "Nummer der Kurs-Kombination\ndie der Schüler belegt hat"),
+      new StringCol("group", "Gruppe", "Nummer der Gruppe, der\nder Schüler zugeordnet wurde"),
+    ];
+    for (let i = 1; i <= blockCount; i ++) {
+      res.push(new StringCol(`block-${i}`, `Block ${i}`, `Im ${i}-ten Block belegter Kurs`));
+    }
+    return res;
+  }
+
 }
