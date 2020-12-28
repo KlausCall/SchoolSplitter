@@ -11,6 +11,13 @@ object-assign
   License: MIT
   */
 
+/* @license
+Papa Parse
+v5.3.0
+https://github.com/mholt/PapaParse
+License: MIT
+*/
+
 /*!
    * Sizzle CSS Selector Engine v2.3.5
    * https://sizzlejs.com/
