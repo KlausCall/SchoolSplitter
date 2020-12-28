@@ -35,7 +35,7 @@ export class Pupil {
       firstname: this.firstname,
       lastname: this.lastname,
       combi: this.courseCombination.getIndex() + 1,
-      group: '--',
+      group: 0,
     };
     this.courseCombination.getCourses().forEach((course, i) => {
       lo['block-' + (i + 1)] = course == null ? '--' : course.getName();
@@ -49,7 +49,7 @@ export class Pupil {
       new StringCol("firstname", "Vorname", "Vorname des Schülers"),
       new StringCol("lastname", "Nachname", "Nachname des Schülers"),
       new NumberCol("combi", "Kombi.", "Nummer der Kurs-Kombination\ndie der Schüler belegt hat"),
-      new StringCol("group", "Gruppe", "Nummer der Gruppe, der\nder Schüler zugeordnet wurde"),
+      new NumberCol("group", "Gruppe", "Nummer der Gruppe, der\nder Schüler zugeordnet wurde"),
     ];
     for (let i = 1; i <= blockCount; i ++) {
       res.push(new StringCol(`block-${i}`, `Block ${i}`, `Im ${i}-ten Block belegter Kurs`));
