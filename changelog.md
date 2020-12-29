@@ -1,6 +1,11 @@
 # Changelog
 
 ## Unreleased
+Changes in the upcoming version are documented here.
+
+---
+
+## v1.2.0
  - improved UI
  - added loadable sample data
  - made tables sortable
