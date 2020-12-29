@@ -22,7 +22,7 @@ export const SolutionDisplay: React.FC<{ slicer?: LevelSlicer }> = ({ slicer }) 
           <span className="badge badge-primary badge-pill">{slicer.getOversize()}</span>
         </li>
         <li className="list-group-item flex-fill d-flex justify-content-between align-items-center px-2 py-1">
-          Züge
+          Schritte
           <span className="badge badge-primary badge-pill">{slicer.getMoveCount()}</span>
         </li>
         <li className="list-group-item flex-fill d-flex justify-content-between align-items-center px-2 py-1">

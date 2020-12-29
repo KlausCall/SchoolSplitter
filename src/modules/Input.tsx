@@ -13,7 +13,6 @@ interface Props {}
 const Input: React.FC<Props> = () => {
   const [gradeLevel, setGradeLevel] = useState<GradeLevel>();
   const [levelSlicer, setLevelSlicer] = useState<LevelSlicer>();
-  const [slicerState, setSlicerState] = useState('');
   const [sliceCount, setSliceCount] = useState(2);
   const [initializer, setInitializer] = useState('first');
   const [groupRestrict, setGroupRestrict] = useState('each');
@@ -36,7 +35,6 @@ const Input: React.FC<Props> = () => {
     const level = new GradeLevel(data);
     setGradeLevel(level);
     setLevelSlicer(undefined);
-    setSlicerState('');
     updateResult(level);
   }
 
@@ -219,7 +217,6 @@ const Input: React.FC<Props> = () => {
                       groupTolerance
                     );
                     setLevelSlicer(slicer);
-                    setSlicerState(slicer.statusString());
                     updateResult(slicer);
                   }
                 }}
@@ -235,7 +232,6 @@ const Input: React.FC<Props> = () => {
                   e.preventDefault();
                   if (levelSlicer) {
                     levelSlicer.optimize();
-                    setSlicerState(levelSlicer.statusString());
                     updateResult(levelSlicer);
                   }
                 }}
@@ -251,7 +247,6 @@ const Input: React.FC<Props> = () => {
                   e.preventDefault();
                   if (levelSlicer) {
                     levelSlicer.doMove();
-                    setSlicerState(levelSlicer.statusString());
                     updateResult(levelSlicer);
                   }
                 }}
@@ -267,7 +262,6 @@ const Input: React.FC<Props> = () => {
                   e.preventDefault();
                   if (levelSlicer) {
                     levelSlicer.undoLastMove();
-                    setSlicerState(levelSlicer.statusString());
                     updateResult(levelSlicer);
                   }
                 }}
@@ -276,11 +270,6 @@ const Input: React.FC<Props> = () => {
               </button>
             </div>
           </div>
-          {/* <p>
-            {levelSlicer
-              ? levelSlicer.configString()
-              : 'Bitte Teilung erzeugen'}
-          </p> */}
       </details>
       <div className="mt-3">
         <div className="form-group row container-fluid">
@@ -302,7 +291,6 @@ const Input: React.FC<Props> = () => {
                   iterations
                 );
                 setLevelSlicer(slicer);
-                setSlicerState(slicer.statusString());
                 updateResult(slicer);
               }
             }}
