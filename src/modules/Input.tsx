@@ -43,21 +43,25 @@ const Input: React.FC<Props> = () => {
       <h3>Eingabe</h3>
       <div className="mb-3">
         <label htmlFor="csvUpload" className="form-label d-flex justify-content-between">
-            <span className="pt-2 pl-3" >CSV Datei mit Daten auswählen:</span>
-            <button
-              className="btn btn-outline-secondary "
-              onClick={(e) => {
-                e.preventDefault();
-                Papa.parse<string[]>('/samples/sample.csv', {
+          <span className="pt-2 pl-3" >CSV Datei mit Daten auswählen:</span>
+          <button
+            className="btn btn-outline-secondary "
+            onClick={(e) => {
+              e.preventDefault();
+              if (window.location.protocol.startsWith("file")) {
+                window.alert('Bitte klicken Sie "Durchsuchen..." und\nwählen die Datei "samples/sample.csv" aus.');
+              } else {
+                Papa.parse<string[]>('./samples/sample.csv', {
                   download: true,
                   complete: (data) => {
                     loadGradeData(data.data);
                   }
                 })
-              }}
-            >
-              Beispiel Daten laden
-            </button>
+              }
+            }}
+          >
+            Beispiel Daten laden
+          </button>
         </label>
         <CSVReader
           inputId="csvUpload"

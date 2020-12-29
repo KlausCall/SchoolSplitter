@@ -55,60 +55,95 @@ const HelpDialog: React.FC<Props> = () => (
               in einem Kurs sind. Zusätzlich können Beschränkungen für die
               resultierende Kursgröße berücksichtigt werden.
             </p>
+            <p>
+              Dieses Werkzeug nutzt einen Browser als Ausführungsumgebung, arbeitet 
+              aber vollständig lokal im Browser. Es überträgt niemals die 
+              verarbeiteten Daten per Netzwerk zu anderen Rechnern. <b>Die vertraulichen
+              Daten der Schüler bleiben durchgehend und ausschließlich auf dem lokalen 
+              Rechner!</b>
+            </p>
+            <h4>Schnell Einstieg</h4>
+            <p>
+              Grundsätzlich sind folgende Schritte zur Bedienung notwendig:
+            </p>
+            <ul>
+              <li>Mit Schaltfläche <i>Durchsuchen...</i> eine CSV-Datei mit den Schülern und Ihren belegten Kursen laden.</li>
+              <li>Einstellungen zur Anzahl Gruppen und gewünschter Gruppengröße wählen.</li>
+              <li>Schaltfläche <i>Lösung berechnen</i> betätigen.</li>
+              <li>In der <i>Schüler</i> Tabelle Gruppenzuordung ablesen oder Tabelle als CSV-Datei speichern.</li>
+            </ul>
             <h4>Eingabe Format</h4>
             <p>
-              Als Eingabe wird eine CSV Datei erwartet. Die erste Zeile der
+              Als Eingabe wird eine CSV-Datei erwartet. Die erste Zeile der
               Datei wird ignoriert (Kopfzeile). Alle weiteren Zeilen entsprechen
-              einem Schüler. Die ersten beiden Werte werden als Nachname und
-              Vorname des Schülers verstanden. Alle weiteren Werte werden als
+              einem Schüler. Die ersten beiden Werte werden als Vorname und
+              Nachname des Schülers verstanden. Alle weiteren Werte werden als
               Namen der vom Schüler belegten Kurse interpretiert. Die Kursnamen
-              müssen eindeutig sein, auch in der Schreibweise. Leere Werte sind
+              müssen eindeutig sein, auch in der Schreibweise. Leere Werte in einer Zeile sind
               zulässig und werden ignoriert.
+            </p>
+            <p>
+              Ein Beispiel kann mit der Schaltfäche <i>Beispiel Datei laden</i> direkt in das 
+              Programm geladen werden oder <a href="./samples/sample.csv">hier heruntergeladen werden.</a>
             </p>
             <h4>Bedienung</h4>
             <p>
               Zunächst ist im Bereich <i>Eingabe</i> eine Datei im erwarteten
-              Format zu laden. Im Bereich <i>Berechnen</i> kann bei Bedarf die{' '}
-              <i>Konfiguartion</i> angepasst werden (Details s.u.) und dann die{' '}
-              <i>Lösung berechnet</i> werden. Bei der Berechnung wird der
-              Lösungsalgorithmus mehrmals durchlaufen und die beste gefundene
-              Lösung ausgegeben. Die Anzahl der <i>Durchläufe</i> kann
-              vorgegeben werden.
+              Format zu laden. Im Bereich <i>Berechnen</i> kann ausgewählt werden,
+              in wieviele Gruppen die Stufe geteilt werden soll. Zusätzlich können 
+              Beschränkungen zur resultierenden Kursgröße je Gruppe definiert werden.
+              Bei Bedarf können auch einige Parameter des Algorithmus angepasst 
+              werden (Details s.u.) und dann muss die <i>Lösung berechnet</i> werden. 
+              Bei der Berechnung wird der Lösungsalgorithmus mehrmals durchlaufen 
+              und die beste gefundene Lösung ausgegeben. 
             </p>
             <h4>Ausgabe</h4>
             <p>
               Die Ausgabe der eingelesenen und berechneten Daten erfolgt im
-              unteren Bereich tabellarisch. Die Tabellen können als CSV-Dateien
-              gesichert werden. Es werden drei Tabellen angezeigt, die Schüler,
+              unteren Bereich tabellarisch. Wesentliches Ergebnis ist die 
+              Spalte <i>Gruppe</i> in der Tabelle der Schüler.
+            </p>
+            <p>
+              <b><i>Hinweis:</i></b> Schüler in mit der selben Kursbelegung (Kombi.) sind gleichwertig.
+              Sollten Schüler aus einer Kursbelegung auf unterschiedliche
+              Gruppen verteilt worden sein, so ist für das Ergebnis irrelevant
+              welcher konkrete Schüler in welcher Gruppe ist. Es kann also
+              innerhalb einer Kursbelegung die Gruppe getauscht werden, so lange die Anzahl
+              der Schüler je Gruppe nicht verändert wird.
+            </p>
+            <p>
+              Es werden drei Tabellen angezeigt, die Schüler,
               die Kurse und die Kursbelegungen. Nach Erzeugung einer Lösung
               werden in diesen Tabellen auch Informationen zu den Gruppen
-              dargestellt.
+              dargestellt. Die Tabellen können als CSV-Dateien gesichert werden. 
             </p>
             <p>
               Zur genaueren Inspektion der Daten kann in jeder Tabelle eine
               Zeile durch Mausklick selektiert werden. In den anderen beiden
-              Tabellen werden dann die korrespondierenden Zeilen hervorgehoben.
+              Tabellen werden dann die korrespondierenden Zeilen hervorgehoben. 
+              Durch Mausklick auf den Titel eier Tabellenspalte kann die Tabelle
+              nach der Spalte sortiert werden.
             </p>
             <h5>Die Schüler Tabelle enthält folgende Spalten:</h5>
             <dl>
-              <dt>no</dt>
+              <dt>Nr.</dt>
               <dd>Nummer des Schülers</dd>
-              <dt>lastname</dt>
-              <dd>Nachname des Schülers</dd>
-              <dt>firstname</dt>
+              <dt>Vorname</dt>
               <dd>Vorname des Schülers</dd>
-              <dt>combi</dt>
+              <dt>Nachname</dt>
+              <dd>Nachname des Schülers</dd>
+              <dt>Kombi.</dt>
               <dd>
                 Eine numerische ID für die Kombination von belegten Kursen des
                 Schülers. Genau die Schüler mit der identischen Kursbelegung
                 haben hier die selbe ID.
               </dd>
-              <dt>group</dt>
+              <dt>Gruppe</dt>
               <dd>
                 ID der Gruppe, der der Schüler bei der Teilung zugeordnet wurde.
-                Die IDs werden numerisch vergeben beginnend mit Null (0).
+                Die IDs werden numerisch vergeben beginnend mit Eins (1).
               </dd>
-              <dt>block-n</dt>
+              <dt>Block &lt;n&gt;</dt>
               <dd>
                 Name des Kurses den der Schüler im n-ten Block belegt. Die
                 Aufteilung der Kurse auf Blöcke werden automatisch berechnet und
@@ -116,17 +151,6 @@ const HelpDialog: React.FC<Props> = () => (
                 entsprechen.
               </dd>
             </dl>
-            <p>
-              <b>
-                <i>Hinweis:</i>
-              </b>{' '}
-              Schüler in mit der selben Kursbelegung (combi) sind gleichwertig.
-              Sollten Schüler aus einer Kursbelegung auf unterschiedliche
-              Gruppen verteilt worden sein, so ist für das Ergebnis irrelevant
-              welcher konkrete Schüler in welcher Gruppe ist. Es kann also
-              innerhalb einer Kursbelegung getauscht werden, so lange die Anzahl
-              der Schüler je Gruppe nicht verändert wird.
-            </p>
             <h4>Konfiguration</h4>
             <p>
               Optionen zur <i>Konfiguration</i> können auf Wunsch eingeblendet
@@ -140,7 +164,7 @@ const HelpDialog: React.FC<Props> = () => (
               <dt>Anzahl Gruppen</dt>
               <dd>
                 Legt fest in wieviele Gruppen der Jahrgang aufgeteilt werden
-                soll. Möglich sind 2 bis 5 Gruppen.
+                soll. Möglich sind 2 bis 10 Gruppen.
               </dd>
               <dt>Begrenzung Gruppen Größe.</dt>
               <dd>
@@ -187,7 +211,7 @@ const HelpDialog: React.FC<Props> = () => (
               </dd>
               <dt>Schrittauswahl</dt>
               <dd>
-                Bei deterministischer Auswahl wird der erste gefunden Schritt
+                Bei deterministischer Auswahl wird der erste gefundene Schritt
                 mit der kleinsten / größten Verbesserung ausgeführt. Bei
                 zufälliger Auswahl wird aus den kleinsten / größten Schritten
                 zufällig ein Schritt zur Ausführung ausgewählt.
@@ -217,7 +241,7 @@ const HelpDialog: React.FC<Props> = () => (
               Phase abgeschlossen. Die gefundenen möglichen Schritte werden
               gewichtet anhand der Verändeung an der Anzahl der Kontakte, die
               der jeweilge Schritt bewirken wird. Aus den nach Gewicht
-              sortierten Schritten wird der auszuführende Schritt gemäß dern
+              sortierten Schritten wird der auszuführende Schritt gemäß den
               gewählten Optioenn ausgewählt und ausgeführt.
             </p>
           </div>
