@@ -1,7 +1,10 @@
 # Changelog
 
 ## Unreleased
-Changes in the upcoming version are documented here.
+ - improved UI
+ - added loadable sample data
+ - made tables sortable
+ - removed NRW-Mode
 
 ---
 
