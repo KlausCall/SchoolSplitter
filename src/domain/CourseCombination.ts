@@ -1,3 +1,6 @@
+import { Column } from '../modules/result/Column';
+import { NumberCol } from '../modules/result/NumberCol';
+import { StringCol } from '../modules/result/StringCol';
 import { Course } from './Course';
 import { Pupil } from './Pupil';
 
@@ -80,15 +83,31 @@ export class CourseCombination {
    */
   public asLO() {
     var lo: any = {
-      no: this.no,
+      no: this.no + 1,
       count: this.members.length,
       combiSize: this.combiSize,
       contacts: this.getContacts(),
       crossCombis: this.connectedCombis?.length,
     };
     this.courseList.forEach((course, i) => {
-      lo['Block-' + i] = course == null ? '--' : course.getName();
+      lo['block-' + (i + 1)] = course == null ? '--' : course.getName();
     });
     return lo;
   }
+
+  public static loCols(blockCount: number) {
+    var res : Column<any>[];
+    res =  [
+      new NumberCol("no", "Nr.", "Nummer der Kombination"),
+      new NumberCol("count", "# Schüler", "Anzahl Schüler mit\ndieser Kursbelegung"),
+      new NumberCol("combiSize", "Größe", "Anzahl Schüler in allen\nKursen  dieser Kombination"),
+      new NumberCol("contacts", "# Kontakte", "Anzahl Kontaktpaare\nin dieser Komination"),
+      new NumberCol("crossCombis", "# verb. Komb.", "Anzahl Kombinationen die min.\neinen gemeinsamen Kurs haben"),
+    ];
+    for (let i = 1; i <= blockCount; i ++) {
+      res.push(new StringCol(`block-${i}`, `Block ${i}`, `Im ${i}-ten Block belegter Kurs`));
+    }
+    return res;
+  }
+
 }

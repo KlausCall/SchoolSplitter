@@ -1,3 +1,4 @@
+import { NumberCol } from '../../modules/result/NumberCol';
 import { CourseCombination } from '../CourseCombination';
 import { LevelSlicer } from './LevelSlicer';
 import { Move } from './Move';
@@ -228,11 +229,22 @@ export class CombiDistribution {
   public asLO() {
     var lo: any = this.combi.asLO();
     for (let i = 0; i < this.size; i++) {
-      lo['Count-' + i] = this.memberCounts[i];
-      lo['CombiSize-' + i] = this.combiSizes[i];
-      lo['Contacts-' + i] = this.getContacts(i);
+      lo['count-' + (i + 1)] = this.memberCounts[i];
+      lo['combiSize-' + (i + 1)] = this.combiSizes[i];
+      lo['contacts-' + (i + 1)] = this.getContacts(i);
     }
     return lo;
+  }
+
+  public static loCols(blockCount: number, groupCount: number) {
+    var res = CourseCombination.loCols(blockCount);
+    for (let i = 1; i <= groupCount; i ++) {
+      res.push(new NumberCol(`count-${i}`, `G.${i} # Schüler`, `Anzahl Schüler mit dieser\nKursbelegung in Gruppe ${i}`));
+      res.push(new NumberCol(`combiSize-${i}`, `G.${i} Größe`, `Anzahl Schüler in allen Kursen\ndieser Kombination in Gruppe ${i}`));
+      res.push(new NumberCol(`contacts-${i}`, `G.${i} # Kont.`, `Anzahl Kontaktpaare in dieser\nKomination in Gruppe ${i}`));
+   }
+
+    return res;
   }
 
   public setPupilsGroups(pupilsTable: any[]) {
@@ -240,7 +252,7 @@ export class CombiDistribution {
     this.memberCounts.forEach((count, i) => {
       var max = pos + count;
       while (pos < max) {
-        pupilsTable[this.combi.getMember(pos).getIndex()].group = i;
+        pupilsTable[this.combi.getMember(pos).getIndex()].group = i + 1;
         pos++;
       }
     });

@@ -187,11 +187,23 @@ export class GradeLevel implements ResultProvider {
     return this.pupilList.map((each) => each.asLO());
   }
 
+  public pupilCols() {
+    return Pupil.loCols(this.blockList.length);
+  }
+
   public courseTable() {
     return this.courseList.map((each) => each.asLO());
   }
 
+  public courseCols() {
+    return Course.loCols();
+  }
+
   public combiTable() {
     return this.combinationList.map((each) => each.asLO());
+  }
+
+  public combiCols() {
+    return CourseCombination.loCols(this.blockList.length);
   }
 }

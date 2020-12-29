@@ -1,6 +1,8 @@
 import { CourseBlock } from './CourseBlock';
 import { Pupil } from './Pupil';
 import { CourseCombination } from './CourseCombination';
+import { NumberCol } from '../modules/result/NumberCol';
+import { StringCol } from '../modules/result/StringCol';
 
 export class Course {
   readonly no: number;
@@ -65,12 +67,23 @@ export class Course {
    */
   public asLO() {
     var lo: any = {
-      no: this.no,
+      no: this.no + 1,
       name: this.name,
-      block: this.block?.getIndex(),
+      block: this.block ? this.block.getIndex() + 1 : null,
       members: this.members.length,
       combis: this.combinations.length,
     };
     return lo;
   }
+
+  public static loCols() {
+    return [
+      new NumberCol("no", "Nr.", "Kursnummer"),
+      new StringCol("name", "Name", "Name des Kurs"),
+      new NumberCol("block", "Block", "Blocknummer des Kurs"),
+      new NumberCol("members", "# Schüler", "Anzahl Schüler im Kurs"),
+      new NumberCol("combis", "# Kombi.", "Anzahl Kombinationen die\ndiesen Kurs enthalten."),
+    ];
+  }
+
 }

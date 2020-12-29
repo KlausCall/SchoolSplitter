@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ResultProvider from '../domain/ResultProvider';
+import ResultProvider from '../../domain/ResultProvider';
 import ResultTable from './ResultTable';
 
 const Result: React.FC<{ holder: ResultProvider[] }> = ({ holder }) => {
@@ -53,18 +53,21 @@ const Result: React.FC<{ holder: ResultProvider[] }> = ({ holder }) => {
     <>
       <ResultTable
         list={provider.pupilTable()}
+        columns={provider.pupilCols()}
         title="Schüler"
         selections={selPupils}
         setSelection={updatePupilSelection}
       ></ResultTable>
       <ResultTable
         list={provider.courseTable()}
+        columns={provider.courseCols()}
         title="Kurse"
         selections={selCourses}
         setSelection={updateCourseSelection}
       ></ResultTable>
       <ResultTable
         list={provider.combiTable()}
+        columns={provider.combiCols()}
         title="Kursbelegung"
         selections={selCombis}
         setSelection={updateCombiSelection}
