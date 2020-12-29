@@ -6,6 +6,7 @@ import ResultProvider from '../domain/ResultProvider';
 import Result from './result/Result';
 import LevelDisplay from './LevelDisplay';
 import Papa from 'papaparse';
+import { SolutionDisplay } from './SolutionDisplay';
 
 interface Props {}
 
@@ -275,12 +276,11 @@ const Input: React.FC<Props> = () => {
               </button>
             </div>
           </div>
-          <p>
+          {/* <p>
             {levelSlicer
               ? levelSlicer.configString()
               : 'Bitte Teilung erzeugen'}
-          </p>
-          <p>{slicerState ? slicerState : 'no Solution calculated'}</p>
+          </p> */}
       </details>
       <div className="mt-3">
         <div className="form-group row container-fluid">
@@ -310,6 +310,7 @@ const Input: React.FC<Props> = () => {
             Lösung berechnen
           </button>
         </div>
+        <SolutionDisplay slicer={levelSlicer}></SolutionDisplay>
       </div>
 
       <h3>Ausgabe</h3>

@@ -258,6 +258,14 @@ export class LevelSlicer implements ResultProvider {
     return this.maxSizes;
   }
 
+  public getMoveCount() {
+    return this.moveList.length;
+  }
+
+  public isFinished() {
+    return this.finished;
+  }
+
   public getOversize() {
     return this.courseSizes.reduce((sum, groupSizes, i) => {
       return groupSizes.reduce(
