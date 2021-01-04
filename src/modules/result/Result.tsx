@@ -17,6 +17,7 @@ const Result: React.FC<{ holder: ResultProvider[] }> = ({ holder }) => {
       if (selCombis.length) {
         setSelCombis([])
       }
+      // eslint-disable-next-line
   }, [holder])
 
   if (holder.length === 0) {
