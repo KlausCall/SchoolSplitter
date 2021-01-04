@@ -266,11 +266,20 @@ export class LevelSlicer implements ResultProvider {
     return this.finished;
   }
 
-  public getOversize() {
+  public getOversizeSum() {
     return this.courseSizes.reduce((sum, groupSizes, i) => {
       return groupSizes.reduce(
         (res, siz) => res + Math.max(0, siz - this.maxSizes[i]),
         sum
+      );
+    }, 0);
+  }
+
+  public getOversizeMax() {
+    return this.courseSizes.reduce((max, groupSizes, i) => {
+      return groupSizes.reduce(
+        (res, siz) => Math.max(res, siz - this.maxSizes[i]),
+        max
       );
     }, 0);
   }
@@ -305,7 +314,7 @@ export class LevelSlicer implements ResultProvider {
       this.moveList.length
     }; Finished: ${this.finished}; Fixing sizes: ${
       this.reduceGroups
-    }; Oversize: ${this.getOversize()}`;
+    }; Oversize sum: ${this.getOversizeSum()}; Oversize max: ${this.getOversizeMax()}`;
   }
 
   public print() {

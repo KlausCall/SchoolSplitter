@@ -18,8 +18,8 @@ export const SolutionDisplay: React.FC<{ slicer?: LevelSlicer }> = ({ slicer }) 
           <span className="badge badge-primary badge-pill">{slicer.getSize()}</span>
         </li>
         <li className="list-group-item flex-fill d-flex justify-content-between align-items-center px-2 py-1">
-          Gruppen Übergröße
-          <span className="badge badge-primary badge-pill">{slicer.getOversize()}</span>
+          Gruppen Übergröße (max/sum)
+          <span className="badge badge-primary badge-pill">{slicer.getOversizeMax()}/{slicer.getOversizeSum()}</span> 
         </li>
         <li className="list-group-item flex-fill d-flex justify-content-between align-items-center px-2 py-1">
           Schritte
