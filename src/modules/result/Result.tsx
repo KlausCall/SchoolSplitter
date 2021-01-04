@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ResultProvider from '../../domain/ResultProvider';
 import ResultTable from './ResultTable';
 
@@ -7,10 +7,23 @@ const Result: React.FC<{ holder: ResultProvider[] }> = ({ holder }) => {
   const [selCourses, setSelCourses] = useState<number[]>([]);
   const [selCombis, setSelCombis] = useState<number[]>([]);
 
+   useEffect(() => {
+      if (selPupils.length) {
+        setSelPupils([]);
+      }
+      if (selCourses.length) {
+        setSelCourses([])
+      }
+      if (selCombis.length) {
+        setSelCombis([])
+      }
+  }, [holder])
+
   if (holder.length === 0) {
     return null;
   }
-  var provider = holder[0];
+
+  const provider = holder[0];
 
   const updatePupilSelection = (row: number) => {
     setSelPupils([row]);

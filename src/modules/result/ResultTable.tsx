@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Column } from './Column';
 
 const ResultTable: React.FC<{
@@ -13,6 +13,7 @@ const ResultTable: React.FC<{
   const [sortColumn, setSortColumn] = useState<number>(0);
   const [sortedIndices, setSortedIndices] = useState<number[]>(list.map((_, i) => i));
  
+  useEffect(()=>setSortedIndices(list.map((_, i) => i)),[list])
   if (!list || list.length === 0) {
     return null;
   }
@@ -70,10 +71,12 @@ const ResultTable: React.FC<{
             <tr>
               {columns.map((col, rawIdx) => {
                 const  idx = rawIdx + 1;
-                return <th onClick={ (e) => {
-                  e.preventDefault();
-                  doSort(idx);
-                }}>
+                return <th 
+                  key={`colhead_${idx}`}
+                  onClick={ (e) => {
+                    e.preventDefault();
+                    doSort(idx);
+                  }}>
                   <div data-toggle="tooltip" data-placement="bottom" title={col.tip}
                        className={'sortable ' + (idx === sortColumn ? 'sortasc' : (-idx) === sortColumn ? 'sortdesc' : '')}>
                     {col.title}
@@ -88,10 +91,11 @@ const ResultTable: React.FC<{
               return (
                 <tr
                   className={selectedRows?.includes(i) ? 'table-info' : ''}
+                  key={`row_${rowi}`}
                   onClick={(ev) => updateSelectedRow(i)}
                 >
-                  {columns.map((col) => (
-                    <td>{col.value(obj)}</td>
+                  {columns.map((col, coli) => (
+                    <td key={`field_${rowi}_${coli}`}>{col.value(obj)}</td>
                   ))}
                 </tr>
               );
