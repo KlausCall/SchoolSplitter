@@ -19,6 +19,7 @@ export class LevelSlicer implements ResultProvider {
   private moveList: Move[];
   private moveTolerance: number;
   private moveSlowly: boolean;
+  private oversizeWeighther: (cur: number, max: number) => number;
 
   public static solve(
     aSize: number,
@@ -29,6 +30,7 @@ export class LevelSlicer implements ResultProvider {
     moveTolerance: number,
     groupRestrict: string,
     groupTolerance: number,
+    sizeWeighting: string,
     iterations: number
   ): LevelSlicer {
     var best: LevelSlicer;
@@ -43,7 +45,8 @@ export class LevelSlicer implements ResultProvider {
       speed,
       moveTolerance,
       groupRestrict,
-      groupTolerance
+      groupTolerance,
+      sizeWeighting
     );
     best.optimize();
     contacts = best.getContacts();
@@ -60,7 +63,8 @@ export class LevelSlicer implements ResultProvider {
         speed,
         moveTolerance,
         groupRestrict,
-        groupTolerance
+        groupTolerance,
+        sizeWeighting
       );
       current.optimize();
       currentContacts = current.getContacts();
@@ -80,7 +84,8 @@ export class LevelSlicer implements ResultProvider {
     speed: string,
     moveTolerance: number,
     groupRestrict: string,
-    groupTolerance: number
+    groupTolerance: number,
+    sizeWeighting: string
   ) {
     if (aSize < 2) {
       throw new Error('size must be at least 2');
@@ -129,6 +134,20 @@ export class LevelSlicer implements ResultProvider {
       this.maxSizes.fill(this.level.getMembers().length);
       this.cfgString += 'unrestricted; ';
     }
+    switch (sizeWeighting) {
+      case 'prefSmall':
+        this.oversizeWeighther = this.prefSmallOversizeWeighther;
+        break;
+      case 'prefBig':
+        this.oversizeWeighther = this.prefBigOversizeWeighther;
+        break;
+      case 'squared':
+        this.oversizeWeighther = this.squaredOversizeWeighther;
+        break;
+      case 'equal':
+      default: 
+        this.oversizeWeighther = this.equalOversizeWeighther;
+    }
     // init move policy
     this.moveList = [];
     this.moveSlowly = 'slow' === speed;
@@ -162,6 +181,27 @@ export class LevelSlicer implements ResultProvider {
     }
   }
 
+  private equalOversizeWeighther(cur: number, max: number): number {
+    return cur <= max ? 0 : cur - max;
+  }
+
+  private prefSmallOversizeWeighther(cur: number, max: number): number {
+    return cur <= max ? 0 : (cur - max) / max;
+  }
+
+  private prefBigOversizeWeighther(cur: number, max: number): number {
+    return cur <= max ? 0 : (cur - max) * max;
+  }
+
+  private squaredOversizeWeighther(cur: number, max: number): number {
+    return cur <= max ? 0 : (cur - max) ** 2;
+  }
+
+  // calc weight of growth by one
+  public weightSizeGrowth(cur: number, max: number): number {
+    return this.oversizeWeighther(cur + 1, max) - this.oversizeWeighther(cur, max);
+  }
+
   public optimize() {
     while (!this.finished) {
       this.doMove();
@@ -178,7 +218,7 @@ export class LevelSlicer implements ResultProvider {
     candidateMoves = [];
     if (this.reduceGroups) {
       this.distributions.forEach((dist) => {
-        dist.findGroupSizeMoves(candidateMoves, (size, max) => ((size > max) ? max : 0))
+        dist.findGroupSizeMoves(candidateMoves);
       });
       if (candidateMoves.length === 0) {
         this.reduceGroups = false;

@@ -22,6 +22,7 @@ const Input: React.FC<Props> = () => {
   const [relMoves, setRelMoves] = useState(30);
   const [iterations, setIterations] = useState(200);
   const [result, setResult] = useState<ResultProvider[]>([]);
+  const [sizeWeighting, setSizeWeighting] = useState('squared')
 
   function updateResult(provider: ResultProvider) {
     if (provider) {
@@ -76,7 +77,7 @@ const Input: React.FC<Props> = () => {
 
       <h3>Berechnen</h3>
       <div className="form-row">
-        <div className="form-group col-md-4">
+        <div className="form-group col-md-3">
           <label htmlFor="sliceInput" className="form-label">
             Gruppen Anzahl: <b>{sliceCount}</b>
           </label>
@@ -91,7 +92,7 @@ const Input: React.FC<Props> = () => {
             value={sliceCount}
           />
         </div>
-        <div className="form-group col-md-4">
+        <div className="form-group col-md-3">
           <label htmlFor="resrictSelect" className="form-label">
             Begrenzung Gruppen Größe:
           </label>
@@ -106,7 +107,7 @@ const Input: React.FC<Props> = () => {
             <option value="each">je Kurs</option>
           </select>
         </div>
-        <div className="form-group col-md-4">
+        <div className="form-group col-md-3">
           <label htmlFor="toleranceInput" className="form-label">
             Toleranz Gruppen Größe: <b>{groupTolerance}</b>
           </label>
@@ -120,6 +121,22 @@ const Input: React.FC<Props> = () => {
             onChange={(e) => setGroupTolerance(e.target.valueAsNumber)}
             value={groupTolerance}
           />
+        </div>
+        <div className="form-group col-md-3">
+          <label htmlFor="sizeWeightingSelect" className="form-label">
+            Gewichtung:
+          </label>
+          <select
+            id="sizeWeightingSelect"
+            className="form-control"
+            onChange={(e) => setSizeWeighting(e.target.value)}
+            value={sizeWeighting}
+          >
+            <option value="equal">gleichberechtigt</option>
+            <option value="prefSmall">zuerst kleine Gruppen</option>
+            <option value="prefBig">zuerst große Gruppen</option>
+            <option value="squared">quadratisch</option>
+          </select>
         </div>
       </div>
 
@@ -218,7 +235,8 @@ const Input: React.FC<Props> = () => {
                       speed,
                       relMoves,
                       groupRestrict,
-                      groupTolerance
+                      groupTolerance,
+                      sizeWeighting
                     );
                     setLevelSlicer(slicer);
                     updateResult(slicer);
@@ -292,6 +310,7 @@ const Input: React.FC<Props> = () => {
                   relMoves,
                   groupRestrict,
                   groupTolerance,
+                  sizeWeighting,
                   iterations
                 );
                 setLevelSlicer(slicer);

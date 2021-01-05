@@ -80,7 +80,7 @@ export class CombiDistribution {
    * find moves for optimization of groupp size
    *
    */
-  public findGroupSizeMoves(resultList: Move[], weighter: (size:number, max: number) => number) {
+  public findGroupSizeMoves(resultList: Move[]) {
     var courseSizes: number[][];
     var maxSizes: number[];
     var sourceAdvantages: number[];
@@ -92,10 +92,10 @@ export class CombiDistribution {
     // calculate expected weighted changes of group size
     sourceAdvantages = this.memberCounts.map((members, slice) => {
       return members === 0 ? 0 
-        : this.courseIndices.reduce((sum , courseIdx) => sum + weighter(courseSizes[courseIdx][slice] , maxSizes[courseIdx]) , 0 );
+        : this.courseIndices.reduce((sum , courseIdx) => sum + this.slicer.weightSizeGrowth(courseSizes[courseIdx][slice] - 1, maxSizes[courseIdx]) , 0 );
     });
     targetPenaltys = this.memberCounts.map((members, slice) => {
-      return this.courseIndices.reduce((sum , courseIdx) => sum + weighter(courseSizes[courseIdx][slice] + 1, maxSizes[courseIdx]) , 0 );
+      return this.courseIndices.reduce((sum , courseIdx) => sum + this.slicer.weightSizeGrowth(courseSizes[courseIdx][slice], maxSizes[courseIdx]) , 0 );
     });
 
     sourceAdvantages.forEach((adv, from) => {
