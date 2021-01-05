@@ -23,6 +23,7 @@ const Input: React.FC<Props> = () => {
   const [iterations, setIterations] = useState(200);
   const [result, setResult] = useState<ResultProvider[]>([]);
   const [sizeWeighting, setSizeWeighting] = useState('squared')
+  const [calculating, setCalculating] = useState(false);
 
   function updateResult(provider: ResultProvider) {
     if (provider) {
@@ -301,23 +302,34 @@ const Input: React.FC<Props> = () => {
             onClick={(e) => {
               e.preventDefault();
               if (gradeLevel) {
-                var slicer = LevelSlicer.solve(
-                  sliceCount,
-                  gradeLevel,
-                  initializer,
-                  move,
-                  speed,
-                  relMoves,
-                  groupRestrict,
-                  groupTolerance,
-                  sizeWeighting,
-                  iterations
-                );
-                setLevelSlicer(slicer);
-                updateResult(slicer);
+                setCalculating(true);
+                setTimeout(() => {
+                  var slicer = LevelSlicer.solve(
+                    sliceCount,
+                    gradeLevel,
+                    initializer,
+                    move,
+                    speed,
+                    relMoves,
+                    groupRestrict,
+                    groupTolerance,
+                    sizeWeighting,
+                    iterations
+                  );
+                  setLevelSlicer(slicer);
+                  setCalculating(false);
+                  updateResult(slicer);
+                }, 0);
               }
             }}
           >
+            {calculating ? (
+              <span
+                className='spinner-border spinner-border-sm bi mx-1'
+                role='status'
+                aria-hidden='true'
+              ></span>
+            ): ''}
             Lösung berechnen
           </button>
         </div>
