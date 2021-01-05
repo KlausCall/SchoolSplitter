@@ -1,7 +1,9 @@
 # Changelog
 
 ## Unreleased
-Changes in the upcoming version are documented here.
+ - fixed table update
+ - show max and sum of group oversize
+ - choosable strategies for size optimization
 
 ---
 
