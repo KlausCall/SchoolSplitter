@@ -192,6 +192,33 @@ const HelpDialog: React.FC<Props> = () => (
                 resultierenden Kurse die Begrenzung um diese Anzahl an Schülern
                 übersteigen.
               </dd>
+              <dt>Gewichtung</dt>
+              <dd>
+                Definiert die Gewichtung der Größenüberschreitung. Der Algorithmus versucht 
+                zuerst die Überschreitungen mit höchstem Gewicht zu reduzieren. <br/>
+                Optionen sind:
+                <ul>
+                        <option value="equal">gleichberechtigt</option>
+                        <option value="prefSmall">zuerst kleine Gruppen</option>
+                        <option value="prefBig">zuerst große Gruppen</option>
+                        <option value="squared">zuerst größte Überschreitung</option>
+                  <li>
+                    <b>gleichberechtigt</b> - Alle Überscheitungen werden gelichberechtigt behandelt
+                  </li>
+                  <li>
+                    <b>zuerst kleine Gruppen</b> - Überschreitungen von Gruppen mit großer maximal Anzahl 
+                    werden bevorzugt ausgeglichen.
+                  </li>
+                  <li>
+                    <b>zuerst große Gruppen</b> - Überschreitungen von Gruppen mit kleiner maximal Anzahl 
+                    werden bevorzugt ausgeglichen.
+                  </li>
+                  <li>
+                    <b>zuerst größte Überschreitung</b> - Große Überschreitungen der Zielanzahl
+                    werden bevorzugt ausgeglichen.
+                  </li>
+                </ul>
+              </dd>
             </dl>
             <h5>Parameter des Algorithmus</h5>
             <dl>
