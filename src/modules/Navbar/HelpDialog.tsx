@@ -198,12 +198,8 @@ const HelpDialog: React.FC<Props> = () => (
                 zuerst die Überschreitungen mit höchstem Gewicht zu reduzieren. <br/>
                 Optionen sind:
                 <ul>
-                        <option value="equal">gleichberechtigt</option>
-                        <option value="prefSmall">zuerst kleine Gruppen</option>
-                        <option value="prefBig">zuerst große Gruppen</option>
-                        <option value="squared">zuerst größte Überschreitung</option>
                   <li>
-                    <b>gleichberechtigt</b> - Alle Überscheitungen werden gelichberechtigt behandelt
+                    <b>gleichberechtigt</b> - Alle Überscheitungen werden gleichberechtigt behandelt
                   </li>
                   <li>
                     <b>zuerst kleine Gruppen</b> - Überschreitungen von Gruppen mit großer maximal Anzahl 
