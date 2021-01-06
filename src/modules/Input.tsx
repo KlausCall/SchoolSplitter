@@ -136,7 +136,7 @@ const Input: React.FC<Props> = () => {
             <option value="equal">gleichberechtigt</option>
             <option value="prefSmall">zuerst kleine Gruppen</option>
             <option value="prefBig">zuerst große Gruppen</option>
-            <option value="squared">quadratisch</option>
+            <option value="squared">zuerst größte Überschreitung</option>
           </select>
         </div>
       </div>
