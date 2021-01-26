@@ -3,7 +3,7 @@
 ## Unreleased
 
 - update ci system to match [gh-pages-auto-deploy@2.1.2](https://github.com/korki43/gh-pages-auto-deploy)
-  - workflow will only run on tag **creation** (#3)
+  - workflow will only run on tag **creation** [(#3)](https://github.com/KlausCall/SchoolSplitter/issues/3)
 
 ---
 
